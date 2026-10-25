@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Altair Project Management",
+  "short_name": "Altair PM",
+  "description": "Project management workspace with a two-way link to Polaris One.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "lang": "en",
+  "background_color": "#ffffff",
+  "theme_color": "#0e6b5c",
+  "categories": ["productivity", "business"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
