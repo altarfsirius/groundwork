@@ -441,6 +441,7 @@ header.top{border-radius:0 0 14px 14px;padding-inline:12px;margin-inline:-4px}
 .evi .btn,.evi a.btn{text-decoration:none}.evi a.btn{color:var(--fg);display:inline-flex;justify-content:center;align-items:center}
 </style>
 <style id="la-r30">
+.la-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.la-form{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;padding:10px;border:1px solid var(--line);border-radius:10px}.la-form input{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:7px 8px;min-width:0}.la-form input[type=color]{padding:0;width:40px;height:34px}.la-icons{display:flex;flex-wrap:wrap;gap:4px}.la-ib{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:2px 5px;font-size:16px;cursor:pointer}
 .la-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
 .la-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow)}
 .la-h{display:flex;align-items:center;gap:8px}.la-ic{font-size:22px}
@@ -614,20 +615,50 @@ var late=function(t){return isOpen(t)&&t.due&&dn(t.due)<TODAY};
 /* ---------- views ---------- */
 var NAVI={areas:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',today:'M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z',dash:'M5 21V11M12 21V4M19 21v-7',board:'M3 4h5v16H3zM10 4h5v9h-5zM17 4h4v12h-4z',time:'M3 6h12M7 12h14M5 18h10',gov:'M4 4h14a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2zM4 18a2 2 0 0 1 2-2h14',fw:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z',scm:'M2 7h11v9H2zM13 10h5l3 3v3h-8zM7 19.5a1.5 1.5 0 1 0 0-.01M17 19.5a1.5 1.5 0 1 0 0-.01',fin:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM14.5 9.5c-.5-1-1.5-1.5-2.5-1.5-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-2-.5-2.5-1.5M12 6.5v1.5M12 16v1.5',know:'M2 9l10-5 10 5-10 5zM6 11v5c0 1 2.7 3 6 3s6-2 6-3v-5',people:'M16 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M9.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M21 20v-2a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8',reports:'M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7',set:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z'};
 
-var LIFE_AREAS=[["Health & Fitness", "💪", "#e0655f", "Training, sleep, nutrition, check-ups"], ["Family & Relationships", "👨\u200d👩\u200d👧", "#e8836b", "Partner, children, parents, close family"], ["Finance & Wealth", "💰", "#d9a21b", "Income, savings, investments, debt"], ["Career", "💼", "#4a7bd0", "Role, promotions, performance"], ["Learning & Growth", "🎓", "#7a5bd0", "Courses, reading, new skills"], ["Social & Friends", "🤝", "#e07aa8", "Friends, community, networking"], ["Home & Living", "🏠", "#8a6f4e", "Home, repairs, household"], ["Spirituality", "🙏", "#9b7bd6", "Faith, reflection, meaning"], ["Creativity & Hobbies", "🎨", "#d4608f", "Art, music, making things"], ["Travel & Adventure", "✈️", "#2fa0b5", "Trips, outings, exploring"], ["Mental Health", "🧠", "#4aa38a", "Stress, therapy, mindfulness"], ["Contribution", "🌱", "#5aa04a", "Volunteering, giving back"], ["Lifestyle", "🛋️", "#8c8fa3", "Routines, comfort, daily life"], ["Personal Projects", "🧩", "#c27a3a", "Side projects and personal pursuits"], ["Digital Life", "💻", "#3d8fd1", "Accounts, devices, online presence"], ["Admin & Legal", "📑", "#6b7a8c", "Documents, taxes, paperwork"], ["Work", "🛠️", "#3b6fb5", "Employer work (shared with Polaris One)"], ["Freelance", "🧾", "#c9772a", "Client work (shared with Polaris One)"]];
+var LIFE_AREAS=[["Academic", "📚", "#0e7490", "Study, degree, research"], ["Parenting", "👨‍👩‍👧‍👦", "#8b1c3c", "Raising children"], ["Vacation", "✈️", "#6aa132", "Trips and holidays"], ["Work", "💼", "#0f766e", "Employer work (shared with Polaris One)"], ["Project", "📐", "#2f6fe0", "Personal project"], ["Investment", "💰", "#c98a0b", "Stocks, crypto, mutual funds"], ["Trading", "📈", "#7c5cd6", "Trading plan & execution"], ["Aviation", "🛩️", "#0e8f9f", "Aircraft technical / business"], ["Hobby", "🏍️", "#e8641b", "Hobbies and leisure"], ["Automotive", "🚗", "#64748b", "Vehicles and maintenance"], ["Family", "👨‍👩‍👧", "#c2457d", "Family time"], ["Ibadah", "🕌", "#1f9d55", "Shalat, Qur'an, kajian"], ["Learning", "📗", "#2f6fe0", "Training, certification"], ["Health", "🏃", "#e0443e", "Exercise, diet"], ["Freelance", "💻", "#7c5cd6", "Client / project (shared with Polaris One)"], ["Business", "🏢", "#c98a0b", "Business development"], ["Personal Development", "🧠", "#0f8a6a", "Skill & character"], ["Financial", "🏛️", "#0f766e", "Income, budget, savings, debt, insurance, tax"]];
 var LIFE_SHARED=['Work','Freelance'];
-function lifeOf(p){var v=p&&p.life;return LIFE_AREAS.some(function(a){return a[0]===v})?v:'Work'}
-function lifeInfo(n){return LIFE_AREAS.filter(function(a){return a[0]===n})[0]||LIFE_AREAS[16]}
-function lifeOptions(sel,wide){return LIFE_AREAS.map(function(a){var off=!wide&&LIFE_SHARED.indexOf(a[0])<0;return '<option value="'+esc(a[0])+'"'+(a[0]===sel?' selected':'')+(off?' disabled':'')+'>'+a[1]+' '+esc(a[0])+'</option>'}).join('')}
+var CUSTOM_AREAS=[];var AREA_KEY='apm-areas-v1',AREA_ICONS=['📁','🏠','🛠️','🎓','🎨','🌱','🧩','🏋️','🧾','📦','🔬','🚀','🛒','🎮','📷','🎵'];
+try{CUSTOM_AREAS=JSON.parse(localStorage.getItem(AREA_KEY)||'[]').filter(function(x){return x&&typeof x.name==='string'})}catch(e){CUSTOM_AREAS=[]}
+function areaSave(){try{localStorage.setItem(AREA_KEY,JSON.stringify(CUSTOM_AREAS))}catch(e){}}
+function areaAll(){return LIFE_AREAS.map(function(a){return {name:a[0],icon:a[1],color:a[2],desc:a[3],builtin:true}}).concat(CUSTOM_AREAS.map(function(x){return {name:x.name,icon:x.icon||'📁',color:x.color||'#64748b',desc:x.desc||'',builtin:false}}))}
+function areaName(v){return typeof v==='string'&&v.trim()?v.trim():'Work'}
+function lifeOf(p){return areaName(p&&p.life)}
+function lifeInfo(n){return areaAll().filter(function(a){return a.name===n})[0]||{name:n,icon:'📁',color:'#64748b',desc:'',builtin:false}}
+function areaCanWrite(n){return sb.la9||LIFE_SHARED.indexOf(n)>=0}
+function lifeOptions(sel){var all=areaAll();if(sel&&!all.some(function(a){return a.name===sel}))all.push({name:sel,icon:'📁'});return all.map(function(a){return '<option value="'+esc(a.name)+'"'+(a.name===sel?' selected':'')+(areaCanWrite(a.name)?'':' disabled')+'>'+a.icon+' '+esc(a.name)+'</option>'}).join('')}
+var areaEdit=null,areaMsg='';
 function renderAreas(){
-  var ts=S.tasks,by={};
+  var by={};
   S.projects.forEach(function(p){var a=lifeOf(p);(by[a]=by[a]||{p:0,o:0,d:0}).p++});
-  ts.forEach(function(t){var p=project(t.project);if(!p)return;var a=lifeOf(p);var r=(by[a]=by[a]||{p:0,o:0,d:0});if(t.status==='done')r.d++;else r.o++});
-  var h='<div class="panel"><h2>Life areas</h2><p class="note" style="margin:0 0 12px">Each project belongs to one life area. Only Work and Freelance are shared with Polaris One; the other areas stay in this app.'+(sb.on&&!sb.la9?' <b>Run the Rev 30 SQL to save other areas to the database.</b>':'')+'</p><div class="la-grid">';
-  h+=LIFE_AREAS.map(function(a){var r=by[a[0]]||{p:0,o:0,d:0};
-    return '<div class="la-card" data-area="'+esc(a[0])+'" style="border-top:4px solid '+a[2]+'"><div class="la-h"><span class="la-ic" aria-hidden="true">'+a[1]+'</span><b>'+esc(a[0])+'</b></div><div class="note">'+esc(a[3])+'</div><div class="la-chips"><span class="la-chip" style="background:'+a[2]+'22;color:var(--ink)">'+r.o+' open</span><span class="la-chip" style="background:#2fa05a22;color:var(--ink)">'+r.d+' done</span>'+(r.p?'<span class="la-chip">'+r.p+' project'+(r.p>1?'s':'')+'</span>':'')+'</div></div>'}).join('');
-  return h+'</div></div>'}
-var NAVL=[['today','Today','Today'],['dash','Overview','Overview'],['areas','Life areas','Areas'],['board','Board','Board'],['time','Timeline','Timeline'],['gov','Governance','Govern'],['fw','Playbook','Playbook'],['scm','Supply chain','Supply'],['fin','Finance','Finance'],['know','Knowledge','Know'],['people','People','People'],['reports','Reports','Reports'],['set','Settings','Settings']];
+  S.tasks.forEach(function(t){var p=project(t.project);if(!p)return;var a=lifeOf(p);var r=(by[a]=by[a]||{p:0,o:0,d:0});if(t.status==='done')r.d++;else r.o++});
+  var list=areaAll();Object.keys(by).forEach(function(n){if(!list.some(function(a){return a.name===n}))list.push(lifeInfo(n))});
+  var canAdd=isAdmin()&&(!sb.on||sb.la9),h='<div class="panel s6"><div class="la-top"><h2 style="margin:0">Domains</h2>'+(isAdmin()?'<button type="button" class="btn" data-act="areanew"'+(canAdd?'':' disabled')+'>+ New domain</button>':'')+'</div><p class="note" style="margin:6px 0 12px">Each project belongs to one domain (choose it on the Projects tab). Only Work and Freelance are shared with Polaris One; the other domains stay in this app.'+(sb.on&&!sb.la9?' <b>Run the Rev 30 SQL (upgrade 9) to use more than Work and Freelance and to add your own domains.</b>':'')+'</p>';
+  if(areaMsg){h+='<p class="note" role="status" style="color:var(--ink)"><b>'+esc(areaMsg)+'</b></p>'}
+  if(areaEdit){var e=areaEdit;h+='<form id="farea" class="la-form"><input id="ar-name" value="'+esc(e.name)+'" placeholder="Domain name" maxlength="40" required aria-label="Domain name"'+(e.orig?' readonly title="The name cannot be changed because projects use it"':'')+'><input id="ar-desc" value="'+esc(e.desc||'')+'" placeholder="Short description" maxlength="120" aria-label="Description"><input id="ar-icon" value="'+esc(e.icon||'📁')+'" maxlength="4" aria-label="Icon" style="width:64px;text-align:center"><span class="la-icons">'+AREA_ICONS.map(function(i){return '<button type="button" class="la-ib" data-act="areaicon" data-i="'+i+'" aria-label="Icon '+i+'">'+i+'</button>'}).join('')+'</span><input id="ar-color" type="color" value="'+esc(e.color||'#64748b')+'" aria-label="Color"><button class="btn" type="submit">Save domain</button><button type="button" class="btn" data-act="areacancel">Cancel</button></form>'}
+  h+='<div class="la-grid">'+list.map(function(a){var r=by[a.name]||{p:0,o:0,d:0};
+    return '<div class="la-card" data-area="'+esc(a.name)+'" style="border-top:4px solid '+a.color+'"><div class="la-h"><span class="la-ic" aria-hidden="true">'+a.icon+'</span><b>'+esc(a.name)+'</b></div><div class="note">'+esc(a.desc||'')+'</div><div class="la-chips"><span class="la-chip" style="background:'+a.color+'22;color:var(--ink)">'+r.o+' open</span><span class="la-chip" style="background:#2fa05a22;color:var(--ink)">'+r.d+' done</span>'+(r.p?'<span class="la-chip">'+r.p+' project'+(r.p>1?'s':'')+'</span>':'')+(isAdmin()&&!a.builtin&&CUSTOM_AREAS.some(function(x){return x.name===a.name})?'<button type="button" class="btn sm" data-act="areaedit" data-n="'+esc(a.name)+'">Edit</button><button type="button" class="btn sm" data-act="areadel" data-n="'+esc(a.name)+'">Delete</button>':'')+'</div></div>'}).join('')+'</div></div>';
+  return h}
+function areaDo(a,el){
+  if(a==='areanew'){areaEdit={name:'',desc:'',icon:'📁',color:'#2f6fe0'};areaMsg='';render();return}
+  if(a==='areacancel'){areaEdit=null;render();return}
+  if(a==='areaicon'){var i=document.getElementById('ar-icon');if(i)i.value=el.dataset.i;return}
+  if(a==='areaedit'){var x=CUSTOM_AREAS.filter(function(c){return c.name===el.dataset.n})[0];if(x){areaEdit={name:x.name,desc:x.desc,icon:x.icon,color:x.color,orig:x.name};areaMsg='';render()}return}
+  if(a==='areadel'){var n=el.dataset.n;if(S.projects.some(function(p){return lifeOf(p)===n})){areaMsg='"'+n+'" is used by a project. Move those projects to another domain first.';render();return}
+    areaRemote('delete',{name:n}).then(function(ok){if(ok){CUSTOM_AREAS=CUSTOM_AREAS.filter(function(c){return c.name!==n});areaSave();areaMsg='Domain "'+n+'" deleted.'}render()});return}
+}
+function areaSubmit(){
+  var nm=(document.getElementById('ar-name').value||'').replace(/\s+/g,' ').trim(),e=areaEdit||{};
+  var rec={name:nm,icon:(document.getElementById('ar-icon').value||'📁').trim()||'📁',color:document.getElementById('ar-color').value||'#64748b',desc:(document.getElementById('ar-desc').value||'').trim()};
+  if(!nm||nm.length>40){areaMsg='Give the domain a name of 1 to 40 characters.';render();return}
+  if(!e.orig&&areaAll().some(function(a){return a.name.toLowerCase()===nm.toLowerCase()})){areaMsg='A domain named "'+nm+'" already exists.';render();return}
+  areaRemote('save',rec).then(function(ok){if(ok){var i=CUSTOM_AREAS.findIndex(function(c){return c.name===nm});if(i>=0)CUSTOM_AREAS[i]=rec;else CUSTOM_AREAS.push(rec);areaSave();areaEdit=null;areaMsg='Domain "'+nm+'" saved.'}render()})}
+/* shared catalogue lives in public.project_areas once upgrade 9 is installed; local mode keeps it in this browser only */
+function areaRemote(op,rec){
+  if(!sb.on)return Promise.resolve(true);
+  if(!sb.la9){areaMsg='Run the Rev 30 SQL (upgrade 9) first.';return Promise.resolve(false)}
+  var q;try{var t=sbClient().from('project_areas');q=op==='delete'?t.delete().eq('name',rec.name):t.upsert({name:rec.name,icon:rec.icon,color:rec.color,description:rec.desc},{onConflict:'name'})}catch(e){areaMsg='Could not reach the database.';return Promise.resolve(false)}
+  return Promise.resolve(q).then(function(r){if(r&&r.error){areaMsg='Not saved: '+(r.error.message||'database error');return false}return true},function(){areaMsg='Not saved: could not reach the database.';return false})}
+var NAVL=[['today','Today','Today'],['dash','Overview','Overview'],['areas','Projects','Projects'],['board','Board','Board'],['time','Timeline','Timeline'],['gov','Governance','Govern'],['fw','Playbook','Playbook'],['scm','Supply chain','Supply'],['fin','Finance','Finance'],['know','Knowledge','Know'],['people','People','People'],['reports','Reports','Reports'],['set','Settings','Settings']];
 var drawerOpen=false;
 function dueCount(){var T=ds(TODAY);return S.tasks.filter(function(t){return isOpen(t)&&t.due&&t.due<=T}).length}
 function drawerSet(on){drawerOpen=!!on;var d=$('#drawer'),sc=$('#dscrim'),b=$('#menubtn');if(!d)return;d.classList.toggle('open',drawerOpen);d.setAttribute('aria-hidden',drawerOpen?'false':'true');sc.hidden=!drawerOpen;if(b)b.setAttribute('aria-expanded',drawerOpen?'true':'false');document.body.classList.toggle('dlock',drawerOpen)}
@@ -737,17 +768,21 @@ function renderTime(){
     '<div class="today" style="left:calc(var(--lab) + '+tx+'px)"></div><div class="today-tag" style="left:calc(var(--lab) + '+tx+'px);top:0">Today</div>'+
     '</div></div>'+(skipped?'<p class="note" style="margin-top:10px">'+skipped+' tasks without dates are not shown.</p>':'');
 }
-function renderTeam(){
+function renderProjects(){
   return '<div class="grid">'+
-  '<div class="panel s6"><h2>Projects</h2><span class="gtip adm">'+GUIDE['nav.pmove']+'</span><div>'+S.projects.slice().sort(byNo).map(function(p){
+  '<div class="panel s12"><h2>Projects</h2><span class="gtip adm">'+GUIDE['nav.pmove']+'</span><div>'+S.projects.slice().sort(byNo).map(function(p){
      var c=S.tasks.filter(function(t){return t.project===p.id}).length;
-     return '<div class="pedit" style="padding-left:'+(((p.no||'').match(/\./g)||[]).length*16)+'px"><span class="idtag mono">'+esc(p.no||'')+'</span><input type="color" data-pc="'+p.id+'" value="'+p.color+'" aria-label="Project color"><input type="text" data-pn="'+p.id+'" value="'+esc(p.name)+'" aria-label="Project name"><span class="note">'+c+' tasks</span>'+((sb.on&&(sb.upg||0)>=6)?'<select data-plife="'+p.id+'" aria-label="Life area for Polaris One" title="Life area (only Work and Freelance are sent to Polaris One)" style="max-width:150px;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:5px 6px;min-width:0">'+lifeOptions(lifeOf(p),sb.la9)+'</select>':'')+'<select data-pmv="'+p.id+'" aria-label="Move under parent project" title="Move under another project" style="max-width:150px;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:5px 6px;min-width:0"><option value="">Top-level</option>'+S.projects.filter(function(x){return !subtree(S.projects,p.id)[x.id]}).sort(byNo).map(function(x){return '<option value="'+x.id+'"'+(x.id===p.parent?' selected':'')+'>'+esc(x.no)+'</option>'}).join('')+'</select><button class="btn sm" data-act="delproj" data-id="'+p.id+'">Delete</button></div>'}).join('')+'</div>'+
+     return '<div class="pedit" style="padding-left:'+(((p.no||'').match(/\./g)||[]).length*16)+'px"><span class="idtag mono">'+esc(p.no||'')+'</span><input type="color" data-pc="'+p.id+'" value="'+p.color+'" aria-label="Project color"><input type="text" data-pn="'+p.id+'" value="'+esc(p.name)+'" aria-label="Project name"><span class="note">'+c+' tasks</span>'+((sb.on&&(sb.upg||0)>=6)?'<select data-plife="'+p.id+'" aria-label="Project domain" title="Domain (only Work and Freelance are sent to Polaris One)" style="max-width:150px;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:5px 6px;min-width:0">'+lifeOptions(lifeOf(p))+'</select>':'')+'<select data-pmv="'+p.id+'" aria-label="Move under parent project" title="Move under another project" style="max-width:150px;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:5px 6px;min-width:0"><option value="">Top-level</option>'+S.projects.filter(function(x){return !subtree(S.projects,p.id)[x.id]}).sort(byNo).map(function(x){return '<option value="'+x.id+'"'+(x.id===p.parent?' selected':'')+'>'+esc(x.no)+'</option>'}).join('')+'</select><button class="btn sm" data-act="delproj" data-id="'+p.id+'">Delete</button></div>'}).join('')+'</div>'+
    '<span class="gtip adm" style="margin-top:10px">'+GUIDE['nav.proj']+'</span><form class="inline-form" id="fproj"><input id="np" placeholder="New project name" aria-label="New project name" required><select id="npp" aria-label="Parent project" style="background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:7px 10px;min-width:0"><option value="">No parent (top-level)</option>'+S.projects.slice().sort(byNo).map(function(p){return '<option value="'+p.id+'">'+esc(p.no+' '+p.name)+'</option>'}).join('')+'</select><button class="btn primary">Add project</button></form></div>'+
+  '</div><p class="note" style="margin-top:12px">Deleting a project also deletes its tasks. Each project\'s domain is chosen in its row; domains themselves are managed under Settings, Domains &amp; members.</p>';
+}
+function renderTeam(){
+  return '<div class="grid">'+renderAreas()+
   '<div class="panel s6"><h2>Team members</h2><div class="list">'+S.members.map(function(m){
      var o=S.tasks.filter(function(t){return t.assignee===m.id&&isOpen(t)}).length;
      return '<div class="li"><span class="av" style="margin:0">'+esc(initials(m.name))+'</span><span class="t"><span class="idtag mono">'+esc(m.no||'')+'</span>'+esc(m.name)+' <span class="note">'+o+' open tasks</span></span><button class="btn sm" data-act="delmem" data-id="'+m.id+'">Delete</button></div>'}).join('')+'</div>'+
    '<span class="gtip adm" style="margin-top:10px">'+GUIDE['nav.mem']+'</span><form class="inline-form" id="fmem"><input id="nm" placeholder="New member name" aria-label="New member name" required><button class="btn primary">Add member</button></form></div>'+
-  '</div><p class="note" style="margin-top:12px">Deleting a project also deletes its tasks. Deleting a member only clears the assignee.</p>';
+  '</div><p class="note" style="margin-top:12px">Deleting a member only clears the assignee.</p>';
 }
 function render(){S.tasks.forEach(function(t){if(t.status==='review')t.status='hold'});
   backfill();
@@ -759,7 +794,7 @@ function render(){S.tasks.forEach(function(t){if(t.status==='review')t.status='h
   if(view==='team'||view==='access'){setSub=view;view='set'}
   if(setSub==='access'&&!(sb.on&&!sb.legacy&&isAdmin()))setSub='acct';
   var keep=$('#tl')?{l:$('#tl').scrollLeft,t:$('#tl').scrollTop}:null;
-  v.innerHTML=view==='dash'?renderDash():view==='board'?renderBoard():view==='time'?renderTime():view==='fw'?renderFw():view==='scm'||view==='fin'?renderSub(view):view==='gov'?renderGov():view==='access'?renderAccess():view==='today'?renderToday():view==='areas'?renderAreas():view==='know'?renderKnow():view==='people'?renderPeople():view==='reports'?renderReports():view==='set'?renderSettings():renderTeam();
+  v.innerHTML=view==='dash'?renderDash():view==='board'?renderBoard():view==='time'?renderTime():view==='fw'?renderFw():view==='scm'||view==='fin'?renderSub(view):view==='gov'?renderGov():view==='access'?renderAccess():view==='today'?renderToday():view==='areas'?renderProjects():view==='know'?renderKnow():view==='people'?renderPeople():view==='reports'?renderReports():view==='set'?renderSettings():renderTeam();
   if(!isAdmin()){['#fproj','#fmem','[data-gf]','[data-act=delproj]','[data-act=delmem]','[data-act=gdelm]','[data-act=gadd]','[data-pmv]','[data-plife]','.gtip.adm'].forEach(function(q){document.querySelectorAll(q).forEach(function(n){n.remove()})});
     if(view==='set'&&(setSub==='proj'||setSub==='org'))v.insertAdjacentHTML('beforeend','<p class="note" style="margin-top:12px">Projects, members, functions, and categories are managed by the admin.</p>')}
   if(sb.on&&sb.deny)v.insertAdjacentHTML('afterbegin','<div class="banner" style="margin-block:0 12px"><b>Access blocked.</b> '+esc(sb.deny)+(sb.denyKind==='nolegacy'?' <button class="btn" data-act="sblegacy">'+(sb.lgAsk?'Click again to confirm':'Continue without access control…')+'</button>':'')+'</div>');
@@ -1043,6 +1078,7 @@ document.addEventListener('click',function(e){
   if(a==='tab'){view=el.dataset.v;drawerSet(false);render();window.scrollTo(0,0);return}
   if(a==='dtoggle'){drawerSet(!drawerOpen);return}
   if(a==='dclose'){drawerSet(false);return}
+  if(a.indexOf('area')===0&&a!=='areas'){areaDo(a,el);return}
   if(a==='setsub'){setSub=el.dataset.s;view='set';render();return}
   if(a==='pick'){F.project=el.dataset.id;render();return}
   if(a==='newproj'){view='team';render();setTimeout(function(){var i=$('#np');if(i)i.focus()},0);return}
@@ -1098,6 +1134,7 @@ document.addEventListener('keydown',function(e){
 document.addEventListener('submit',function(e){
   e.preventDefault();
   if(e.target.dataset&&e.target.dataset.sbf){sbForm(e);return}
+  if(e.target.id==='farea'){areaSubmit();return}
   if(e.target.id==='tform')saveModal();
   if(e.target.id==='rform')saveRec();
   if(e.target.id==='gform')saveGd();
@@ -1131,7 +1168,7 @@ document.addEventListener('change',function(e){
   if(e.target.dataset&&e.target.dataset.ssfn){var fnv=e.target.value.trim().replace(/[^A-Za-z0-9_-]/g,'');store.set('altairordo-ss-fn',fnv);ss.err='';toast(fnv?'Sync function name saved: '+fnv:'Sync function name reset.');return}
   if(e.target.dataset&&e.target.dataset.pc){var p=project(e.target.dataset.pc);if(p){p.color=e.target.value;commit()}}
   if(e.target.dataset&&e.target.dataset.pn){var q=project(e.target.dataset.pn),v=e.target.value.trim();if(q&&v){q.name=v;commit()}}
-  if(e.target.dataset&&e.target.dataset.plife){var pl=project(e.target.dataset.plife);if(pl&&LIFE_AREAS.some(function(a){return a[0]===e.target.value})&&(sb.la9||LIFE_SHARED.indexOf(e.target.value)>=0)){pl.life=e.target.value;commit()}}
+  if(e.target.dataset&&e.target.dataset.plife){var pl=project(e.target.dataset.plife);var nv=areaName(e.target.value);if(pl&&e.target.value.trim()&&areaCanWrite(nv)){pl.life=nv;commit()}}
   if(e.target.dataset&&e.target.dataset.pmv){var pm=project(e.target.dataset.pmv);if(pm&&reparent(S.projects,pm,e.target.value,'PRJ'))commit();else render()}
   if(e.target.id==='fm'){F.member=e.target.value;render()}
 });
@@ -1643,7 +1680,7 @@ var scmSub='mtl',finSub='cash';
 var SCM=[['mtl','Material & Tools Planning',['mtl']],['po','Purchase Orders',['po']],['bonded','Bonded Area',['bonded']],['rcv','Receiving & Quality Inspection',['receiving','inspect']],['usage','Usage',['usage']],['flow','Material Flow',null]];
 var FIN=[['cash','Cash Flow',['cash']],['po','Purchase Orders',['po']],['nre','Non-Recurring Engineering',['nre']],['bom','Bill of Material',['bom']],['cogm','Cost of Goods Manufactured',['cogm']],['cogs','Cost of Goods Sold',['cogs']]];
 function renderSub(kind){
-  if(!S.projects.length)return '<div class="empty">Add a project first (Settings, Projects & members).</div>';
+  if(!S.projects.length)return '<div class="empty">Add a project first (Projects tab).</div>';
   var cfg=kind==='scm'?SCM:FIN,cur=kind==='scm'?scmSub:finSub,pid=F.project||S.projects[0].id;F.project=pid;
   var tab=cfg.find(function(x){return x[0]===cur})||cfg[0];
   var bar='<div class="subtabs" role="tablist" aria-label="'+(kind==='scm'?'Supply chain':'Finance')+' sections">'+cfg.map(function(x){var n=x[2]?x[2].reduce(function(a,k){return a+recsOf(k,pid).length},0):'';return '<button role="tab" data-act="ssub" data-k="'+kind+'" data-s="'+x[0]+'" aria-selected="'+(x[0]===tab[0])+'">'+esc(x[1])+(n?' <b>'+n+'</b>':'')+'</button>'}).join('')+'</div>';
@@ -1706,7 +1743,7 @@ function renderMap(m,pid){
    '<div class="panel" style="margin-top:14px"><h2>Module coverage</h2><div class="tblw"><table class="tbl"><thead><tr><th>Module</th><th>PMBOK 6 knowledge area</th><th>Process groups</th><th>PMBOK 7 domains</th><th>Principles</th><th>Entries</th></tr></thead><tbody>'+rowsH+'</tbody></table></div></div>';
 }
 function renderFw(){
-  if(!S.projects.length)return '<div class="empty">Add a project first (Settings, Projects & members).</div>';
+  if(!S.projects.length)return '<div class="empty">Add a project first (Projects tab).</div>';
   if(!F.project)F.project=S.projects[0].id;
   var pid=F.project,m=modOf(fwMod)||modOf('map');
   var nav=GROUPS.map(function(g){return '<div class="ng"><div class="ngt">'+g+'</div>'+MODS.filter(function(x){return x.g===g}).map(function(x){
@@ -1797,7 +1834,7 @@ function renderLib(){
    :'<div class="empty">No documents yet. Add a regulation, standard, procedure, instruction, or any other reference. A project needs at least one.</div>');
 }
 function renderBasis(){
-  if(!S.projects.length)return '<div class="empty">Add a project first (Settings, Projects & members).</div>';
+  if(!S.projects.length)return '<div class="empty">Add a project first (Projects tab).</div>';
   var p=curProj()||S.projects[0];if(!F.project)F.project=p.id;
   var o=(S.pgov||{})[p.id]||{},ids=Object.keys(o).filter(gdoc);
   var linked=govOrder().filter(function(x){return o[x.d.id]});
@@ -2020,6 +2057,7 @@ async function sbLoadAccess(){
   if(si.error){sb.deny='The database version could not be checked ('+(si.error.message||'error')+').';sb.denyKind='error';return}
   sb.upg=si.data?(parseInt(si.data.value,10)||0):0;sb.has2=sb.upg>=2;sb.has4=sb.upg>=4;sb.has5=sb.upg>=5;
   sb.la9=false;try{var s9=await c.from('schema_info').select('value').eq('key','upgrade_9').maybeSingle();sb.la9=!!(s9&&s9.data&&parseInt(s9.data.value,10)>=1)}catch(e){}
+  if(sb.la9){try{var ar=await c.from('project_areas').select('name,icon,color,description').order('name');if(ar&&ar.data){CUSTOM_AREAS=ar.data.filter(function(x){return LIFE_AREAS.every(function(b){return b[0].toLowerCase()!==String(x.name).toLowerCase()})}).map(function(x){return {name:x.name,icon:x.icon||'📁',color:x.color||'#64748b',desc:x.description||''}});areaSave()}}catch(e){}}
   ss.loaded=false;
   if(r.data.role!=='admin'){
     var a;try{a=await c.from('project_access').select('project_id,access').eq('user_id',sb.user.id)}catch(e){a={error:e}}
@@ -3246,7 +3284,7 @@ function compDownload(id){var c=(S.comp||[]).find(function(x){return x.id===id})
 document.addEventListener('click',function(e){
   var el=e.target.closest('[data-act]');if(!el)return;var a=el.dataset.act;
   if(a==='psub'){pp.sub=el.dataset.s;render();return}
-  if(a==='cadd'){if(!S.members.length){toast('Add a member first (Settings, Projects & members).');return}compForm({member:(myMember()||{}).id,kind:'Certification',status:'Completed'});return}
+  if(a==='cadd'){if(!S.members.length){toast('Add a member first (Settings, Domains & members).');return}compForm({member:(myMember()||{}).id,kind:'Certification',status:'Completed'});return}
   if(a==='cedit'){var c=(S.comp||[]).find(function(x){return x.id===el.dataset.id});if(c)compForm(c);return}
   if(a==='cclose'){if(el.dataset.x||e.target===el)compClose();return}
   if(a==='cdel'){if(!el.dataset.armed){el.dataset.armed='1';el.textContent='Click again to delete';return}S.comp=S.comp.filter(function(x){return x.id!==el.dataset.id});compClose();commit();return}
@@ -3546,7 +3584,7 @@ function renderSettings(){
    :'<form class="inline-form" id="ftl"><input type="email" id="tl-email" placeholder="Polaris One e-mail" required autocomplete="username" aria-label="Polaris One e-mail"><input type="password" id="tl-pass" placeholder="Polaris One password" required autocomplete="current-password" aria-label="Polaris One password"><button class="btn primary"'+(tl.busy?' disabled':'')+'>'+(tl.busy?'Signing in...':'Sign in to Polaris One')+'</button></form><p class="note">Use the same e-mail and password you use in Polaris One. They go only to the Polaris One database, never to Altair Project Management servers.</p>')+
    (tl.err?'<div class="banner" style="margin-top:10px">'+esc(tl.err)+'</div>':'')+(tl.msg?'<p class="note" style="margin-top:8px"><b>'+esc(tl.msg)+'</b></p>':'')+(tl.log.length?'<ul class="how">'+tl.log.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>':'')+
    '<p class="note" style="margin-top:8px">Polaris One also reads this database by itself (Integrations, Groundwork). The table and column names are unchanged, so that older link keeps working.</p></div>';
-  var SUBS=[['acct','Account & database'],['work','Work day'],['cal','Outlook calendar'],['tl','Polaris One sync'],['proj','Projects & members'],['org','Functions & categories'],['bak','Backup & restore']];if(sb.on&&!sb.legacy&&isAdmin())SUBS.push(['access','Access']);
+  var SUBS=[['acct','Account & database'],['work','Work day'],['cal','Outlook calendar'],['tl','Polaris One sync'],['proj','Domains & members'],['org','Functions & categories'],['bak','Backup & restore']];if(sb.on&&!sb.legacy&&isAdmin())SUBS.push(['access','Access']);
   var nav='<div class="subtabs" role="tablist" aria-label="Settings sections">'+SUBS.map(function(x){return '<button role="tab" type="button" data-act="setsub" data-s="'+x[0]+'" aria-selected="'+(setSub===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>';
   var body=setSub==='work'?wd:setSub==='cal'?ol:setSub==='tl'?(function(){if(!ss.loaded&&ssOn())setTimeout(ssLoad,0);return ssHtml()})()+tu+(tl.user?mtSyncHtml():''):setSub==='proj'?renderTeam()+evOrphanHtml():setSub==='org'?renderSetup():setSub==='bak'?bkHtml():setSub==='access'?renderAccess():'<p class="gtip" style="margin-bottom:12px">'+esc(GUIDE['set.db'])+'</p><div id="board" class="sbboard"></div>';
   return '<div class="setwrap"><h2 class="sethead">Settings</h2>'+nav+'<div class="setg'+(setSub==='work'||setSub==='cal'||setSub==='tl'?' narrow':'')+'">'+body+'</div></div>'}
