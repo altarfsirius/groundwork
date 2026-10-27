@@ -2,10 +2,10 @@
    Scope: the folder this file is served from. Caches the app shell only.
    NEVER caches or touches: *.supabase.co (database, auth, storage, edge functions), non-GET requests, or authenticated calls. */
 'use strict';
-var VERSION = 'apm-2026-10-26-r30';
+var VERSION = 'apm-2026-10-27-r36';
 var SHELL = VERSION + '-shell';
 var RUNTIME = VERSION + '-runtime';
-var SHELL_FILES = ['./', 'index.htm', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'];
+var SHELL_FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 /* cross-origin hosts whose static assets may be cached (library and fonts only) */
 var STATIC_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
@@ -35,10 +35,10 @@ self.addEventListener('fetch', function (e) {
   /* page navigations: network first, so a new version is picked up on the next open; offline falls back to the cached app */
   if (req.mode === 'navigate' && u.origin === self.location.origin) {
     e.respondWith(fetch(req).then(function (r) {
-      if (r && r.ok) { var cp = r.clone(); caches.open(SHELL).then(function (c) { c.put('index.htm', cp); }); }
+      if (r && r.ok) { var cp = r.clone(); caches.open(SHELL).then(function (c) { c.put('index.html', cp); }); }
       return r;
     }).catch(function () {
-      return caches.match('index.htm').then(function (r) { return r || caches.match('./'); }).then(function (r) { return r || new Response('Offline', { status: 503, headers: { 'content-type': 'text/plain' } }); });
+      return caches.match('index.html').then(function (r) { return r || caches.match('./'); }).then(function (r) { return r || new Response('Offline', { status: 503, headers: { 'content-type': 'text/plain' } }); });
     }));
     return;
   }
