@@ -2,7 +2,7 @@
    Scope: the folder this file is served from. Caches the app shell only.
    NEVER caches or touches: *.supabase.co (database, auth, storage, edge functions), non-GET requests, or authenticated calls. */
 'use strict';
-var VERSION = 'apm-2026-10-27-r38';
+var VERSION = 'apm-2026-10-27-r39';
 var SHELL = VERSION + '-shell';
 var RUNTIME = VERSION + '-runtime';
 var SHELL_FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];

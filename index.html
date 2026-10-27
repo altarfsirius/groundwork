@@ -613,10 +613,17 @@ document.addEventListener('click',function(ev){var t=ev.target;if(t&&t.id==='sav
 var member=function(id){return S.members.find(function(m){return m.id===id})};
 var project=function(id){return S.projects.find(function(p){return p.id===id})};
 var initials=function(n){return (n||'?').trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join('').toUpperCase()};
+var SC_TYPES=['Requirement','Deliverable','WBS work package'];
+function kindOk(t){
+  var k=F.kind; if(!k)return true;
+  if(k==='activity')return !t.parent; if(k==='action')return !!t.parent;
+  if(k.indexOf('sc:')===0){var ty=k.slice(3);return ((S.rec&&S.rec.scope)||[]).some(function(r){return r.type===ty&&r.task&&(r.task===t.id||r.task===t.parent)})}
+  return true;
+}
 function visible(){
   var q=F.q.toLowerCase();
   return S.tasks.filter(function(t){
-    return (!F.project||t.project===F.project)&&(!F.member||t.assignee===F.member)&&(!F.kind||(F.kind==='activity'?!t.parent:!!t.parent))&&(!q||t.title.toLowerCase().indexOf(q)>-1);
+    return (!F.project||t.project===F.project)&&(!F.member||t.assignee===F.member)&&kindOk(t)&&(!q||t.title.toLowerCase().indexOf(q)>-1);
   });
 }
 var isOpen=function(t){return t.status!=='done'&&t.status!=='cancelled'};
@@ -691,7 +698,7 @@ function renderFilters(){
    '<button class="pchip add" data-act="newproj">+ Project</button></div>'+
    (fwv?'':'<input id="fq" type="search" placeholder="Search tasks" aria-label="Search tasks" value="'+esc(F.q)+'">')+
    (fwv?'':'<select id="fm" aria-label="Filter by assignee"><option value="">All members</option>'+S.members.map(function(m){return '<option value="'+m.id+'"'+(F.member===m.id?' selected':'')+'>'+esc(m.name)+'</option>'}).join('')+'</select>')+
-   (fwv?'':'<select id="ft" aria-label="Filter by type"><option value="">All types</option><option value="activity"'+(F.kind==='activity'?' selected':'')+'>Activities</option><option value="action"'+(F.kind==='action'?' selected':'')+'>Actions (sub-items)</option></select>');
+   (fwv?'':'<select id="ft" aria-label="Filter by type"><option value="">All types</option><option value="activity"'+(F.kind==='activity'?' selected':'')+'>Activities</option><option value="action"'+(F.kind==='action'?' selected':'')+'>Actions (sub-items)</option><optgroup label="Linked to Requirements &amp; WBS">'+SC_TYPES.map(function(x){return '<option value="sc:'+x+'"'+(F.kind==='sc:'+x?' selected':'')+'>'+x+'</option>'}).join('')+'</optgroup></select>');
 }
 function card(t){
   var m=member(t.assignee),p=project(t.project);
@@ -1262,7 +1269,7 @@ var MODS=[
 {k:'benefits',t:'Value & Benefits',g:'Integration',p6:'Business case, benefits plan',pg:'Initiating, Closing',p7:'Delivery',pr:'4',desc:'Link the project to the value it should deliver, with measures and targets.',
  fields:[{k:'title',l:'Benefit',t:'text',col:1},{k:'metric',l:'Measure',t:'text',col:1},{k:'base',l:'Baseline',t:'text'},{k:'target',l:'Target',t:'text',col:1},{k:'actual',l:'Actual',t:'text',col:1},{k:'owner',l:'Benefit owner',t:'text'},{k:'when',l:'Expected by',t:'date'},{k:'status',l:'Status',t:'sel',o:['Planned','In progress','Realized','At risk'],col:1,badge:1}]},
 {k:'scope',t:'Requirements & WBS',g:'Planning',p6:'5.1 to 5.6 Scope',pg:'Planning, Monitoring & Controlling',p7:'Planning, Delivery',pr:'4, 8',desc:'Requirements, deliverables, and WBS work packages, each with acceptance criteria.',
- fields:[{k:'code',l:'WBS / ID',t:'text',col:1,ph:'1.2.3'},{k:'title',l:'Name',t:'text',col:1},{k:'type',l:'Type',t:'sel',o:['Requirement','Deliverable','WBS work package'],col:1},{k:'prio',l:'Priority',t:'sel',o:['Must','Should','Could',"Won't"]},{k:'accept',l:'Acceptance criteria',t:'area'},{k:'owner',l:'Owner',t:'text',col:1},{k:'status',l:'Status',t:'sel',o:['Proposed','Approved','In progress','Delivered','Accepted'],col:1,badge:1}]},
+ fields:[{k:'code',l:'WBS / ID',t:'text',col:1,ph:'1.2.3'},{k:'title',l:'Name',t:'text',col:1},{k:'type',l:'Type',t:'sel',o:['Requirement','Deliverable','WBS work package'],col:1},{k:'prio',l:'Priority',t:'sel',o:['Must','Should','Could',"Won't"]},{k:'accept',l:'Acceptance criteria',t:'area'},{k:'owner',l:'Owner',t:'text',col:1},{k:'task',l:'Linked activity or task',t:'ref',r:'task'},{k:'status',l:'Status',t:'sel',o:['Proposed','Approved','In progress','Delivered','Accepted'],col:1,badge:1}]},
 {k:'schedule',t:'Schedule',g:'Planning',p6:'6.1 to 6.6 Schedule',pg:'Planning, Monitoring & Controlling',p7:'Planning, Project Work, Measurement',pr:'7',special:'schedule',desc:'The schedule is built from this project\'s tasks on the Board and Timeline.'},
 {k:'cost',t:'Cost & EVM',g:'Planning',p6:'7.1 to 7.4 Cost',pg:'Planning, Monitoring & Controlling',p7:'Planning, Measurement',pr:'1',desc:'Budget lines with earned value measures (EV, CPI, SPI). Enter amounts in your project currency.',
  fields:[{k:'title',l:'Budget line',t:'text',col:1},{k:'cat',l:'Category',t:'sel',o:['Labor','Material','Equipment','Services','Contingency','Other'],col:1},{k:'planned',l:'Planned budget',t:'num',col:1},{k:'pv',l:'Planned value to date',t:'num',col:1},{k:'pct',l:'% complete (0-100)',t:'num',col:1},{k:'actual',l:'Actual cost to date',t:'num',col:1},{k:'note',l:'Notes',t:'area'}]},
