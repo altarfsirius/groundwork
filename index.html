@@ -129,6 +129,10 @@ nav.tabs button[aria-selected="true"]{background:var(--surface);color:var(--fg);
 .tl-track{position:relative;height:36px;border-top:1px solid var(--line);background-image:linear-gradient(to right,var(--line) 1px,transparent 1px);background-size:var(--dw) 100%}
 .tl-bar{position:absolute;top:7px;height:22px;border-radius:5px;border:0;color:#fff;font-size:11.5px;font-weight:500;padding:0 8px;text-align:left;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .tl-bar.done{opacity:.45}
+.tl-bar.wbs{background:transparent!important;border:2px dashed;font-weight:600}
+.wcard{background:var(--surface);border:1px dashed var(--line);border-radius:8px;padding:10px 11px;display:flex;flex-direction:column;gap:7px;cursor:pointer;text-align:left;width:100%}
+.wcard .t{font-weight:500}.wcard .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px}.wbs-ty{font-weight:600}
+.wbs-tg{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--mut,inherit);white-space:nowrap}
 .today{position:absolute;top:0;bottom:0;width:2px;background:var(--bad);z-index:2;pointer-events:none}
 .today-tag{position:absolute;top:0;transform:translateX(-50%);background:var(--bad);color:#fff;font:500 10px var(--f-mono);padding:0 5px;border-radius:0 0 4px 4px;z-index:4}
 /* team */
@@ -620,6 +624,20 @@ function kindOk(t){
   if(k.indexOf('sc:')===0){var ty=k.slice(3);return ((S.rec&&S.rec.scope)||[]).some(function(r){return r.type===ty&&r.task&&(r.task===t.id||r.task===t.parent)})}
   return true;
 }
+var SC_COL={'Proposed':'todo','Approved':'todo','In progress':'doing','Delivered':'review','Accepted':'done'};
+function wbsDates(r,seen){
+  seen=seen||{};if(seen[r.id])return null;seen[r.id]=1;
+  var a=null,b=null;
+  function add(t){if(!t)return;var x=t.start||t.due,y=t.due||t.start;if(!x)return;x=dn(x);y=dn(y);if(y<x){var z=x;x=y;y=z}a=a===null?x:Math.min(a,x);b=b===null?y:Math.max(b,y)}
+  if(r.task)add(tk(r.task));
+  if(a===null)((S.rec&&S.rec.scope)||[]).forEach(function(c){if(c.parent===r.id){var d=wbsDates(c,seen);if(d){a=a===null?d.a:Math.min(a,d.a);b=b===null?d.b:Math.max(b,d.b)}}});
+  return a===null?null:{a:a,b:b};
+}
+function wbsItems(){
+  if(F.wbs===false||F.member||F.kind==='activity'||F.kind==='action')return [];
+  var q=(F.q||'').toLowerCase(),ty=(F.kind||'').indexOf('sc:')===0?F.kind.slice(3):'';
+  return ((S.rec&&S.rec.scope)||[]).filter(function(r){return (!F.project||r.project===F.project)&&(!ty||r.type===ty)&&(!q||((r.title||'')+' '+(r.code||'')).toLowerCase().indexOf(q)>-1)});
+}
 function visible(){
   var q=F.q.toLowerCase();
   return S.tasks.filter(function(t){
@@ -698,7 +716,7 @@ function renderFilters(){
    '<button class="pchip add" data-act="newproj">+ Project</button></div>'+
    (fwv?'':'<input id="fq" type="search" placeholder="Search tasks" aria-label="Search tasks" value="'+esc(F.q)+'">')+
    (fwv?'':'<select id="fm" aria-label="Filter by assignee"><option value="">All members</option>'+S.members.map(function(m){return '<option value="'+m.id+'"'+(F.member===m.id?' selected':'')+'>'+esc(m.name)+'</option>'}).join('')+'</select>')+
-   (fwv?'':'<select id="ft" aria-label="Filter by type"><option value="">All types</option><option value="activity"'+(F.kind==='activity'?' selected':'')+'>Activities</option><option value="action"'+(F.kind==='action'?' selected':'')+'>Actions (sub-items)</option><optgroup label="Linked to Requirements &amp; WBS">'+SC_TYPES.map(function(x){return '<option value="sc:'+x+'"'+(F.kind==='sc:'+x?' selected':'')+'>'+x+'</option>'}).join('')+'</optgroup></select>');
+   (fwv?'':'<select id="ft" aria-label="Filter by type"><option value="">All types</option><option value="activity"'+(F.kind==='activity'?' selected':'')+'>Activities</option><option value="action"'+(F.kind==='action'?' selected':'')+'>Actions (sub-items)</option><optgroup label="Linked to Requirements &amp; WBS">'+SC_TYPES.map(function(x){return '<option value="sc:'+x+'"'+(F.kind==='sc:'+x?' selected':'')+'>'+x+'</option>'}).join('')+'</optgroup></select>'+((view==='board'||view==='time')?'<label class="wbs-tg"><input type="checkbox" id="fwbs"'+(F.wbs===false?'':' checked')+'> Show WBS items</label>':''));
 }
 function card(t){
   var m=member(t.assignee),p=project(t.project);
@@ -713,15 +731,21 @@ function card(t){
     (m?'<span class="av" title="'+esc(m.name)+'">'+esc(initials(m.name))+'</span>':'')+'</div></div>';
 }
 function tk(id){return S.tasks.find(function(x){return x.id===id})}
+function wcard(r){
+  var p=project(r.project),lk=r.task&&tk(r.task);
+  return '<div class="wcard" tabindex="0" role="button" data-act="redit" data-m="scope" data-id="'+r.id+'" title="Requirements &amp; WBS item (open to edit; change its status there)">'+
+    '<div class="t"><span class="idtag mono">'+esc(r.code||'')+'</span>'+esc(r.title||'')+'</div>'+
+    '<div class="meta"><span class="chip wbs-ty">'+esc(r.type||'WBS')+'</span><span class="chip">'+esc(r.status||'')+'</span>'+(p?'<span><i class="dot" style="background:'+p.color+'"></i> '+esc(p.name)+'</span>':'')+(lk?'<span class="note">Task '+esc(lk.no||'')+'</span>':'')+(r.owner?'<span class="note">'+esc(r.owner)+'</span>':'')+'</div></div>';
+}
 function renderBoard(){
-  var ts=visible();
+  var ts=visible(),wb=wbsItems();
   return '<div class="board">'+ST.map(function(s){
-    var items=ts.filter(function(t){return t.status===s.k});
-    return '<section class="col" data-col="'+s.k+'"><h3><i style="background:'+s.c+'"></i>'+s.l+'<span>'+items.length+'</span></h3>'+
-      items.map(card).join('')+
+    var items=ts.filter(function(t){return t.status===s.k}),wi=wb.filter(function(r){return (SC_COL[r.status]||'todo')===s.k});
+    return '<section class="col" data-col="'+s.k+'"><h3><i style="background:'+s.c+'"></i>'+s.l+'<span>'+(items.length+wi.length)+'</span></h3>'+
+      items.map(card).join('')+wi.map(wcard).join('')+
       '<button class="addrow" data-act="new" data-st="'+s.k+'">+ Add</button></section>';
   }).join('')+'</div>'+
-  '<p class="note" style="margin-top:12px">Drag cards between columns to change status, or open a card to edit it.</p>';
+  '<p class="note" style="margin-top:12px">Drag cards between columns to change status, or open a card to edit it. Dashed cards are Requirements &amp; WBS items: open one to change its status; they are placed by their WBS status (Proposed and Approved = Not Started, In progress, Delivered = Reviewed, Accepted = Completed).</p>';
 }
 function renderDash(){
   var ts=visible(),n=ts.length;
@@ -762,9 +786,11 @@ function tlLabW(){try{var v=parseInt(localStorage.getItem('altairpm-tl-lab'),10)
 function renderTime(){
   var ts=visible().filter(function(t){return t.start||t.due}).map(function(t){
     var a=dn(t.start||t.due),b=dn(t.due||t.start);if(b<a){var x=a;a=b;b=x}
-    return {t:t,a:a,b:b}}).sort(function(x,y){return x.a-y.a});
-  var skipped=visible().length-ts.length;
-  if(!ts.length)return '<div class="empty">No dated tasks yet. Add a start or due date to show a task on the timeline.</div>';
+    return {t:t,a:a,b:b}});
+  var skipped=visible().length-ts.length,wbAll=wbsItems(),wskip=0;
+  wbAll.forEach(function(r){var d=wbsDates(r);if(d)ts.push({w:r,a:d.a,b:d.b});else wskip++});
+  ts.sort(function(x,y){return x.a-y.a});
+  if(!ts.length)return '<div class="empty">No dated tasks yet. Add a start or due date to show a task on the timeline.</div>'+(wskip?'<p class="note">'+wskip+' WBS items have no dates (link them to a dated task).</p>':'');
   var min=Math.min(TODAY-3,Math.min.apply(null,ts.map(function(x){return x.a})))-2;
   var max=Math.max(TODAY+20,Math.max.apply(null,ts.map(function(x){return x.b})))+3;
   var DW=30,days=max-min+1,W=days*DW;
@@ -778,6 +804,9 @@ function renderTime(){
   var dh='';for(var e=min;e<=max;e++){var w=new Date(e*DAY).getUTCDay();dh+='<span class="'+(w===0||w===6?'we':'')+'">'+new Date(e*DAY).getUTCDate()+'</span>'}
   var tx=(TODAY-min)*DW+DW/2;
   var rows=ts.map(function(x){
+    if(x.w){var wp=project(x.w.project),wc=wp?wp.color:'#667';
+      return '<div class="tl-row"><div class="tl-lab" title="'+esc((x.w.type||'WBS')+': '+(x.w.title||''))+'"><i class="dot" style="background:'+wc+'"></i><span class="idtag mono">'+esc(x.w.code||'')+'</span>'+esc(x.w.title||'')+'<i class="tl-rs" aria-hidden="true"></i></div>'+
+      '<div class="tl-track" style="width:'+W+'px"><button class="tl-bar wbs'+(x.w.status==='Accepted'?' done':'')+'" data-act="redit" data-m="scope" data-id="'+x.w.id+'" title="'+esc((x.w.type||'WBS')+' · '+(x.w.status||''))+'" style="left:'+(x.a-min)*DW+'px;width:'+((x.b-x.a+1)*DW-2)+'px;color:'+wc+';border-color:'+wc+'">'+esc(x.w.type||'WBS')+': '+esc(x.w.title||'')+'</button></div></div>'}
     var p=project(x.t.project),col=p?p.color:'#667';
     return '<div class="tl-row"><div class="tl-lab" title="'+esc(x.t.title)+'"><i class="dot" style="background:'+col+'"></i><span class="idtag mono">'+esc(x.t.no||'')+'</span>'+esc(x.t.title)+'<i class="tl-rs" aria-hidden="true"></i></div>'+
       '<div class="tl-track" style="width:'+W+'px"><button class="tl-bar'+(x.t.status==='done'?' done':'')+'" data-act="edit" data-id="'+x.t.id+'" style="left:'+(x.a-min)*DW+'px;width:'+((x.b-x.a+1)*DW-2)+'px;background:'+col+'">'+(x.t.status==='done'?'✓ ':'')+esc(x.t.title)+'</button></div></div>';
@@ -786,7 +815,7 @@ function renderTime(){
     '<div class="tl-head"><div class="tl-lab">Task<i class="tl-rs" tabindex="0" role="separator" aria-orientation="vertical" aria-label="Resize the task column (drag, or use the left and right arrow keys; double-click to reset)" title="Drag to resize. Double-click to reset."></i></div><div style="width:'+W+'px"><div class="months">'+ms+'</div><div class="days">'+dh+'</div></div></div>'+
     rows+
     '<div class="today" style="left:calc(var(--lab) + '+tx+'px)"></div><div class="today-tag" style="left:calc(var(--lab) + '+tx+'px);top:0">Today</div>'+
-    '</div></div>'+(skipped?'<p class="note" style="margin-top:10px">'+skipped+' tasks without dates are not shown.</p>':'');
+    '</div></div>'+(skipped?'<p class="note" style="margin-top:10px">'+skipped+' tasks without dates are not shown.</p>':'')+(wskip?'<p class="note" style="margin-top:6px">'+wskip+' WBS items have no dates and are not shown. A WBS item takes its dates from its linked task, or from the linked tasks of its sub-items.</p>':'');
 }
 function renderProjects(){
   return '<div class="grid">'+
@@ -1195,6 +1224,7 @@ document.addEventListener('change',function(e){
   if(e.target.dataset&&e.target.dataset.pmv){var pm=project(e.target.dataset.pmv);if(pm&&reparent(S.projects,pm,e.target.value,'PRJ'))commit();else render()}
   if(e.target.id==='fm'){F.member=e.target.value;render()}
   if(e.target.id==='ft'){F.kind=e.target.value;render()}
+  if(e.target.id==='fwbs'){F.wbs=e.target.checked;render()}
   if(e.target.dataset&&e.target.dataset.fwf){var fk=e.target.dataset.m;fwF[fk]=fwF[fk]||{};fwF[fk][e.target.dataset.fwf]=e.target.value;render()}
 });
 /* drag and drop */
