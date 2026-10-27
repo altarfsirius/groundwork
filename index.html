@@ -120,6 +120,7 @@ nav.tabs button[aria-selected="true"]{background:var(--surface);color:var(--fg);
 .tl-in{--lab:200px}.tl-head,.tl-row{display:grid;grid-template-columns:var(--lab) auto}
 .tl-lab{position:sticky;left:0;z-index:3;background:var(--surface);border-right:1px solid var(--line);padding:0 10px;display:flex;align-items:center;gap:8px;min-width:0;height:36px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px}
 .tl-head{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.tl-rs{position:absolute;top:0;bottom:0;right:0;width:9px;cursor:col-resize;touch-action:none;z-index:4}.tl-rs::after{content:'';position:absolute;top:0;bottom:0;right:0;width:2px;background:transparent;transition:background .12s}.tl-rs:hover::after,.tl-rs:focus-visible::after,.tl-rs.on::after{background:var(--accent,#0e6b5c)}.tl-rs:focus-visible{outline:none}@media(pointer:coarse){.tl-rs{width:16px}}
 .tl-head .tl-lab{height:auto;font:500 11px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 .months,.days{display:flex}
 .months span{font:600 12px var(--f-body);padding:5px 6px;border-left:1px solid var(--line);overflow:hidden;white-space:nowrap}
@@ -615,7 +616,7 @@ var initials=function(n){return (n||'?').trim().split(/\s+/).map(function(w){ret
 function visible(){
   var q=F.q.toLowerCase();
   return S.tasks.filter(function(t){
-    return (!F.project||t.project===F.project)&&(!F.member||t.assignee===F.member)&&(!q||t.title.toLowerCase().indexOf(q)>-1);
+    return (!F.project||t.project===F.project)&&(!F.member||t.assignee===F.member)&&(!F.kind||(F.kind==='activity'?!t.parent:!!t.parent))&&(!q||t.title.toLowerCase().indexOf(q)>-1);
   });
 }
 var isOpen=function(t){return t.status!=='done'&&t.status!=='cancelled'};
@@ -689,7 +690,8 @@ function renderFilters(){
    S.projects.map(function(p){var c=S.tasks.filter(function(t){return t.project===p.id}).length;return '<button class="pchip" data-act="pick" data-id="'+p.id+'" aria-pressed="'+(F.project===p.id)+'"><i class="dot" style="background:'+p.color+'"></i>'+esc(p.name)+' <b>'+c+'</b></button>'}).join('')+
    '<button class="pchip add" data-act="newproj">+ Project</button></div>'+
    (fwv?'':'<input id="fq" type="search" placeholder="Search tasks" aria-label="Search tasks" value="'+esc(F.q)+'">')+
-   (fwv?'':'<select id="fm" aria-label="Filter by assignee"><option value="">All members</option>'+S.members.map(function(m){return '<option value="'+m.id+'"'+(F.member===m.id?' selected':'')+'>'+esc(m.name)+'</option>'}).join('')+'</select>');
+   (fwv?'':'<select id="fm" aria-label="Filter by assignee"><option value="">All members</option>'+S.members.map(function(m){return '<option value="'+m.id+'"'+(F.member===m.id?' selected':'')+'>'+esc(m.name)+'</option>'}).join('')+'</select>')+
+   (fwv?'':'<select id="ft" aria-label="Filter by type"><option value="">All types</option><option value="activity"'+(F.kind==='activity'?' selected':'')+'>Activities</option><option value="action"'+(F.kind==='action'?' selected':'')+'>Actions (sub-items)</option></select>');
 }
 function card(t){
   var m=member(t.assignee),p=project(t.project);
@@ -749,6 +751,7 @@ function renderDash(){
      }).join(''):'<div class="note">No members yet.</div>')+
    '</div></div>';
 }
+function tlLabW(){try{var v=parseInt(localStorage.getItem('altairpm-tl-lab'),10);return v>=110&&v<=900?v:0}catch(e){return 0}}
 function renderTime(){
   var ts=visible().filter(function(t){return t.start||t.due}).map(function(t){
     var a=dn(t.start||t.due),b=dn(t.due||t.start);if(b<a){var x=a;a=b;b=x}
@@ -769,11 +772,11 @@ function renderTime(){
   var tx=(TODAY-min)*DW+DW/2;
   var rows=ts.map(function(x){
     var p=project(x.t.project),col=p?p.color:'#667';
-    return '<div class="tl-row"><div class="tl-lab" title="'+esc(x.t.title)+'"><i class="dot" style="background:'+col+'"></i><span class="idtag mono">'+esc(x.t.no||'')+'</span>'+esc(x.t.title)+'</div>'+
+    return '<div class="tl-row"><div class="tl-lab" title="'+esc(x.t.title)+'"><i class="dot" style="background:'+col+'"></i><span class="idtag mono">'+esc(x.t.no||'')+'</span>'+esc(x.t.title)+'<i class="tl-rs" aria-hidden="true"></i></div>'+
       '<div class="tl-track" style="width:'+W+'px"><button class="tl-bar'+(x.t.status==='done'?' done':'')+'" data-act="edit" data-id="'+x.t.id+'" style="left:'+(x.a-min)*DW+'px;width:'+((x.b-x.a+1)*DW-2)+'px;background:'+col+'">'+(x.t.status==='done'?'✓ ':'')+esc(x.t.title)+'</button></div></div>';
   }).join('');
-  return '<div class="tl" id="tl"><div class="tl-in" style="--dw:'+DW+'px">'+
-    '<div class="tl-head"><div class="tl-lab">Task</div><div style="width:'+W+'px"><div class="months">'+ms+'</div><div class="days">'+dh+'</div></div></div>'+
+  return '<div class="tl" id="tl"><div class="tl-in" style="--dw:'+DW+'px'+(tlLabW()?';--lab:'+tlLabW()+'px':'')+'">'+
+    '<div class="tl-head"><div class="tl-lab">Task<i class="tl-rs" tabindex="0" role="separator" aria-orientation="vertical" aria-label="Resize the task column (drag, or use the left and right arrow keys; double-click to reset)" title="Drag to resize. Double-click to reset."></i></div><div style="width:'+W+'px"><div class="months">'+ms+'</div><div class="days">'+dh+'</div></div></div>'+
     rows+
     '<div class="today" style="left:calc(var(--lab) + '+tx+'px)"></div><div class="today-tag" style="left:calc(var(--lab) + '+tx+'px);top:0">Today</div>'+
     '</div></div>'+(skipped?'<p class="note" style="margin-top:10px">'+skipped+' tasks without dates are not shown.</p>':'');
@@ -1184,6 +1187,8 @@ document.addEventListener('change',function(e){
   if(e.target.dataset&&e.target.dataset.plife){var pl=project(e.target.dataset.plife);var nv=areaName(e.target.value);if(pl&&e.target.value.trim()&&areaCanWrite(nv)){pl.life=nv;commit()}}
   if(e.target.dataset&&e.target.dataset.pmv){var pm=project(e.target.dataset.pmv);if(pm&&reparent(S.projects,pm,e.target.value,'PRJ'))commit();else render()}
   if(e.target.id==='fm'){F.member=e.target.value;render()}
+  if(e.target.id==='ft'){F.kind=e.target.value;render()}
+  if(e.target.dataset&&e.target.dataset.fwf){var fk=e.target.dataset.m;fwF[fk]=fwF[fk]||{};fwF[fk][e.target.dataset.fwf]=e.target.value;render()}
 });
 /* drag and drop */
 var dragId=null;
@@ -1304,12 +1309,17 @@ function cell(m,f,r){
   if(f.badge)return '<span class="chip">'+esc(v)+'</span>';
   return esc(v);
 }
+var fwF={};
 function renderRecords(m,pid){
-  var rows=recsOf(m.k,pid).sort(byNo),cols=m.fields.filter(function(f){return f.col});
+  var all=recsOf(m.k,pid).sort(byNo),cols=m.fields.filter(function(f){return f.col});
+  /* filters on the columns "Type" and "Status" (only when this module has them as shown option columns) */
+  var fs=['type','status'].map(function(k){return cols.find(function(f){return f.k===k&&f.t==='sel'})}).filter(Boolean),cur=fwF[m.k]||{};
+  var rows=all.filter(function(r){return fs.every(function(f){return !cur[f.k]||String(r[f.k]||'')===cur[f.k]})});
+  var fbar=fs.length&&all.length?'<div class="kfilters" style="margin:0 0 10px">'+fs.map(function(f){return '<select style="flex:0 0 auto;width:auto;min-width:170px;max-width:260px" data-fwf="'+f.k+'" data-m="'+m.k+'" aria-label="Filter by '+esc(f.l.toLowerCase())+'"><option value="">All '+esc(f.l.toLowerCase().replace(/ \(.*\)/,''))+(f.k==='type'?'s':'')+'</option>'+f.o.map(function(x){return '<option'+(cur[f.k]===x?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select>'}).join('')+'<span class="note">'+rows.length+' of '+all.length+'</span></div>':'';
   var body=rows.length?'<div class="tblw"><table class="tbl"><thead><tr><th>ID</th>'+cols.map(function(f){return '<th>'+esc(f.l.replace(/ \(.*\)/,''))+'</th>'}).join('')+'</tr></thead><tbody>'+
    rows.map(function(r){return '<tr tabindex="0" data-act="redit" data-m="'+m.k+'" data-id="'+r.id+'"><td class="mono idc" style="padding-left:'+(12+((r.no||'').match(/\./g)||[]).length*16)+'px">'+(((r.no||'').indexOf('.')>-1)?'<span class="note">↳ </span>':'')+esc(r.no||'')+'</td>'+cols.map(function(f){return '<td>'+cell(m,f,r)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>'
-   :'<div class="empty">No entries yet. Add the first one with the button above.</div>';
-  return fwHead(m)+body+(extras[m.k]?extras[m.k](rows,pid):'');
+   :(all.length?'<div class="empty">No entry matches the filter.</div>':'<div class="empty">No entries yet. Add the first one with the button above.</div>');
+  return fwHead(m)+fbar+body+(extras[m.k]?extras[m.k](rows,pid):'');
 }
 var extras={
  risk:function(rows){
@@ -3397,6 +3407,23 @@ function ssVerdict(res,o){
   document.addEventListener('touchstart',function(e){tstart=e.touches&&e.touches[0]?{x:e.touches[0].clientX,y:e.touches[0].clientY,t:e.target}:null},{capture:true,passive:true});
   document.addEventListener('touchend',function(e){var t=e.target,c=e.changedTouches&&e.changedTouches[0];if(!eligible(t)||!tstart||tstart.t!==t||!c||Math.abs(c.clientX-tstart.x)>10||Math.abs(c.clientY-tstart.y)>10)return;if(e.cancelable){e.preventDefault();open(t)}},{capture:true,passive:false});
   document.addEventListener('keydown',function(e){if(pk)return;var t=e.target;if(!eligible(t))return;if(e.key==='Enter'||e.key===' '||e.key==='F4'||(e.altKey&&e.key==='ArrowDown')){e.preventDefault();open(t)}},true);
+})();
+/* Timeline: the line between the Task column and the chart can be dragged (mouse, touch or arrow keys) so that task names are readable.
+   The width is remembered on this device. Double-click the line to go back to the default width. */
+(function(){
+  var MINW=110;
+  function box(){return document.getElementById('tl')}
+  function inn(){return document.querySelector('#tl .tl-in')}
+  function maxw(){var b=box();return Math.max(160,(b?b.clientWidth:600)-120)}
+  function setW(w,save){var i=inn();if(!i)return;w=Math.round(Math.max(MINW,Math.min(w,maxw())));i.style.setProperty('--lab',w+'px');var h=i.querySelector('.tl-head .tl-rs');if(h){h.setAttribute('aria-valuenow',w);h.setAttribute('aria-valuemin',MINW)}if(save){try{localStorage.setItem('altairpm-tl-lab',String(w))}catch(e){}}return w}
+  function cur(){var l=document.querySelector('#tl .tl-head .tl-lab');return l?l.getBoundingClientRect().width:200}
+  document.addEventListener('pointerdown',function(e){
+    var h=e.target.closest&&e.target.closest('.tl-rs');if(!h||(e.button&&e.button!==0))return;
+    e.preventDefault();e.stopPropagation();var sx=e.clientX,w0=cur(),last=w0,hs=document.querySelectorAll('.tl-rs');hs.forEach(function(x){x.classList.add('on')});
+    var mv=function(ev){last=setW(w0+ev.clientX-sx,false)},up=function(){document.removeEventListener('pointermove',mv,true);document.removeEventListener('pointerup',up,true);document.removeEventListener('pointercancel',up,true);hs.forEach(function(x){x.classList.remove('on')});setW(last,true)};
+    document.addEventListener('pointermove',mv,true);document.addEventListener('pointerup',up,true);document.addEventListener('pointercancel',up,true)},true);
+  document.addEventListener('dblclick',function(e){var h=e.target.closest&&e.target.closest('.tl-rs');if(!h)return;e.preventDefault();try{localStorage.removeItem('altairpm-tl-lab')}catch(x){}var i=inn();if(i)i.style.removeProperty('--lab')},true);
+  document.addEventListener('keydown',function(e){var h=e.target.closest&&e.target.closest('.tl-rs');if(!h)return;var d=e.key==='ArrowRight'?20:e.key==='ArrowLeft'?-20:0;if(!d&&e.key!=='Home'&&e.key!=='End')return;e.preventDefault();setW(e.key==='Home'?MINW:e.key==='End'?maxw():cur()+d,true)},true);
 })();
 function nameFitsEmail(name,local){
   var t=nameToks(name);if(!t.length||!local)return false;var l=local.replace(/[^a-z0-9]/g,''),j=t.join('');
