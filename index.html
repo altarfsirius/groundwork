@@ -38,6 +38,41 @@ button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:1480px;margin-inline:auto}
 
+
+#gate{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+#gate[hidden]{display:none}
+html.gate-on body{overflow:hidden}
+.g-card{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 26px;box-shadow:var(--shadow);text-align:left}
+.g-logo{display:block;margin:0 auto 8px;border-radius:12px}
+.g-app{text-align:center;font-weight:700;letter-spacing:-.01em;margin-bottom:14px;color:var(--muted)}
+.g-card h1{font-size:22px;margin:0 0 14px;text-align:center}
+.g-f{display:block;font-size:13px;font-weight:600;margin-bottom:12px}
+.g-f input{display:block;width:100%;margin-top:5px;padding:11px 12px;font:400 16px inherit;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:inherit;box-sizing:border-box}
+.gt-show{display:flex;align-items:center;gap:8px;font-size:14px;margin:2px 0 14px;cursor:pointer}
+.gt-show input{width:18px;height:18px}
+.gt-go{width:100%;padding:12px;font-size:16px}
+.g-links{display:flex;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap}
+.g-link{background:none;border:0;color:var(--accent);font:600 14px inherit;cursor:pointer;padding:6px 0;text-decoration:underline}
+.g-off{display:block;width:100%;margin-top:14px;background:none;border:0;color:var(--muted);font:400 13px inherit;cursor:pointer;text-decoration:underline;padding:6px}
+.g-err{background:rgba(190,30,45,.09);border:1px solid rgba(190,30,45,.35);color:#9b1c2b;border-radius:9px;padding:9px 11px;font-size:14px;margin:0 0 12px}
+.g-msg{background:rgba(15,118,110,.09);border:1px solid rgba(15,118,110,.3);border-radius:9px;padding:9px 11px;font-size:14px;margin:0 0 12px}
+.g-help{font-size:14px;color:var(--muted);margin:0 0 12px}
+.g-acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.gt-prog{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0 10px}
+.gt-prog i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s ease}
+.g-row{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.gt-prog i{transition:none}}
+
+.who-pick{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:0 8px 0 6px;min-height:44px;max-width:100%;margin:0;cursor:pointer}
+.who-pick .ic{flex:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(15,118,110,.12);color:var(--accent)}
+.who-cap{font-size:12px;color:var(--muted);white-space:nowrap}
+.kfilters .who-pick select{flex:1 1 auto;border:0;background:transparent;font:600 15px inherit;color:inherit;padding:8px 2px;min-width:0;border-radius:0}
+.tdgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.kpi.kt{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.kpi.kt .ic{flex:none;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(15,118,110,.12);color:var(--accent)}
+.kpi.kt.warn .ic{background:rgba(190,30,45,.12);color:var(--bad)}
+.kpi.kt .n{font-size:24px}
+@media (max-width:640px){.tdgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi.kt{flex-direction:column;align-items:flex-start;gap:8px;padding:12px}.kpi.kt .n{font-size:22px}.kpi.kt .l{margin-top:2px}.who-cap{display:none}}
 .appver{margin-left:0;font:500 12px/1.2 ui-monospace,Menlo,Consolas,monospace;color:var(--mut,#667);white-space:nowrap;padding:3px 8px;border:1px solid var(--line);border-radius:999px;user-select:text;align-self:center}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:14px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;border-bottom:1px solid var(--line)}
 .brand{font:700 22px/1 var(--f-display);letter-spacing:-.02em;margin-right:auto;display:flex;align-items:baseline;gap:10px;min-width:0}
@@ -482,7 +517,7 @@ header.top{background:rgba(255,255,255,.84);-webkit-backdrop-filter:blur(6px);ba
   <header class="top">
     <button class="menubtn" id="menubtn" type="button" data-act="dtoggle" aria-label="Menu" aria-expanded="false" aria-controls="drawer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <div class="brand"><img class="mark" alt="" width="36" height="36" src="data:image/png;base64,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">Altair Project Management <small id="today"></small></div>
-    <span class="appver" id="appver" title="Version 2026.10.27 · Revision 41">Rev 41 · v2026.10.27</span>
+    <span class="appver" id="appver" title="Version 2026.10.28 · Revision 42">Rev 42 · v2026.10.28</span>
     <nav class="tabs" role="tablist" id="tabs"></nav>
     <button class="btn primary" data-act="new">+ New task</button>
     <span class="save" id="save" aria-live="polite"></span>
@@ -491,6 +526,7 @@ header.top{background:rgba(255,255,255,.84);-webkit-backdrop-filter:blur(6px);ba
   <div class="filters" id="filters"></div>
   <main id="view"></main>
 </div>
+<div id="gate" hidden></div>
 <div id="modal"></div>
 <div class="dscrim" id="dscrim" data-act="dclose" hidden></div>
 <aside class="drawer" id="drawer" aria-label="Main menu" aria-hidden="true"></aside>
@@ -2116,14 +2152,21 @@ async function sbLoadAccess(){
   if(!r.data){sb.deny='No profile exists for this account. Ask the admin to check your account.';sb.denyKind='noprofile';return}
   sb.profile=r.data;
   if(!r.data.active){sb.deny='Your account is disabled. Ask the admin to activate it.';sb.denyKind='disabled';return}
-  var si;try{si=await c.from('schema_info').select('value').eq('key','upgrade').maybeSingle()}catch(e){si={error:e}}
+  var Q=await Promise.all([
+    c.from('schema_info').select('value').eq('key','upgrade').maybeSingle(),
+    c.from('schema_info').select('value').eq('key','upgrade_9').maybeSingle(),
+    c.from('project_areas').select('name,icon,color,description').order('name'),
+    r.data.role!=='admin'?c.from('project_access').select('project_id,access').eq('user_id',sb.user.id):null
+  ].map(function(q){return Promise.resolve(q).then(function(x){return x},function(e){return {error:e}})}));
+  gateProg(20,'Checking the database');
+  var si=Q[0];
   if(si.error){sb.deny='The database version could not be checked ('+(si.error.message||'error')+').';sb.denyKind='error';return}
   sb.upg=si.data?(parseInt(si.data.value,10)||0):0;sb.has2=sb.upg>=2;sb.has4=sb.upg>=4;sb.has5=sb.upg>=5;
-  sb.la9=false;try{var s9=await c.from('schema_info').select('value').eq('key','upgrade_9').maybeSingle();sb.la9=!!(s9&&s9.data&&parseInt(s9.data.value,10)>=1)}catch(e){}
-  if(sb.la9){try{var ar=await c.from('project_areas').select('name,icon,color,description').order('name');if(ar&&ar.data){CUSTOM_AREAS=ar.data.filter(function(x){return LIFE_AREAS.every(function(b){return b[0].toLowerCase()!==String(x.name).toLowerCase()})}).map(function(x){return {name:x.name,icon:x.icon||'📁',color:x.color||'#64748b',desc:x.description||''}});areaSave()}}catch(e){}}
+  sb.la9=false;try{var s9=Q[1];sb.la9=!!(s9&&s9.data&&parseInt(s9.data.value,10)>=1)}catch(e){}
+  if(sb.la9){try{var ar=Q[2];if(ar&&ar.data){CUSTOM_AREAS=ar.data.filter(function(x){return LIFE_AREAS.every(function(b){return b[0].toLowerCase()!==String(x.name).toLowerCase()})}).map(function(x){return {name:x.name,icon:x.icon||'📁',color:x.color||'#64748b',desc:x.description||''}});areaSave()}}catch(e){}}
   ss.loaded=false;
   if(r.data.role!=='admin'){
-    var a;try{a=await c.from('project_access').select('project_id,access').eq('user_id',sb.user.id)}catch(e){a={error:e}}
+    var a=Q[3]||{data:[]};
     if(a.error){sb.deny='Your project access could not be loaded ('+(a.error.message||'error')+').';sb.denyKind='error';return}
     (a.data||[]).forEach(function(x){sb.access[x.project_id]=x.access==='edit'?3:x.access==='input'?2:1});
   }
@@ -2336,21 +2379,27 @@ async function sbPush(){
   boardRender(true);
   return true;
 }
+async function poolRun(fns,n,onDone){var i=0,d=0;await Promise.all(Array.from({length:Math.min(n,fns.length)},async function(){while(i<fns.length){var k=i++;await fns[k]();d++;if(onDone)onDone(d,fns.length)}}))}
 async function fetchAll(c,t){var out=[],from=0,step=1000;for(;;){var r=await c.from(t).select('*').range(from,from+step-1);if(r.error)throw werr(t,r.error);out=out.concat(r.data||[]);if(!r.data||r.data.length<step)break;from+=step}return out}
 function fwO(N,pid){var f=N.fw[pid]=N.fw[pid]||{};['charter','tailor','iso','isoN','pr','prn','dm','dmn','dmo','proc','step','gate','gaten'].forEach(function(k){f[k]=f[k]||{}});return f}
 async function sbPull(){
   var c=sbClient(),N={v:1,sample:false,projects:[],members:[],tasks:[],comp:[],fn:[],cat:[],gov:[],pgov:{},fw:{},rec:{},seq:{}};
-  for(var i=0;i<SPEC.length;i++){var sp=SPEC[i];if(!okT(sp.t))continue;var rows=await fetchAll(c,sp.t),arr=gp(N,sp.p,true);rows.forEach(function(r){arr.push(itemOf(r,sp))});arr.sort(byNo)}
+  var EX=['project_governance','project_forms','process_status','step_status','stage_gates','principle_ratings','domain_ratings'].concat(sb.has2?['iso_status']:[]).concat(['domain_outcomes']);
+  var NAMES=SPEC.filter(function(sp){return okT(sp.t)}).map(function(sp){return sp.t}).concat(EX),R={};
+  gateProg(25,'Loading projects and tasks');
+  var got=await poolRun(NAMES.map(function(t){return function(){return fetchAll(c,t).then(function(x){R[t]=x})}}),6,function(d,n){gateProg(25+Math.round(d/n*70),'Loading data ('+d+' of '+n+')')});
+  gateProg(96,'Preparing the screen');
+  for(var i=0;i<SPEC.length;i++){var sp=SPEC[i];if(!okT(sp.t))continue;var rows=R[sp.t]||[],arr=gp(N,sp.p,true);rows.forEach(function(r){arr.push(itemOf(r,sp))});arr.sort(byNo)}
   var t,rs;
-  rs=await fetchAll(c,'project_governance');rs.forEach(function(r){(N.pgov[r.project_id]=N.pgov[r.project_id]||{})[r.doc_id]={st:r.compliance,note:r.notes||''}});
-  rs=await fetchAll(c,'project_forms');rs.forEach(function(r){var o=fwO(N,r.project_id);if(r.kind==='charter')o.charter=r.data||{};else o.tailor=r.data||{}});
-  rs=await fetchAll(c,'process_status');rs.forEach(function(r){fwO(N,r.project_id).proc[r.process_id]=r.status});
-  rs=await fetchAll(c,'step_status');rs.forEach(function(r){fwO(N,r.project_id).step[r.step_id]=r.status});
-  rs=await fetchAll(c,'stage_gates');rs.forEach(function(r){var o=fwO(N,r.project_id);o.gate[r.stage_id]=r.decision;o.gaten[r.stage_id]=r.notes||''});
-  rs=await fetchAll(c,'principle_ratings');rs.forEach(function(r){var o=fwO(N,r.project_id);o.pr['p'+r.principle_no]=String(r.level);o.prn['p'+r.principle_no]=r.notes||''});
-  rs=await fetchAll(c,'domain_ratings');rs.forEach(function(r){var o=fwO(N,r.project_id);o.dm['d'+r.domain_no]=String(r.level);o.dmn['d'+r.domain_no]=r.notes||''});
-  if(sb.has2){rs=await fetchAll(c,'iso_status');rs.forEach(function(r){var o=fwO(N,r.project_id);o.iso[r.clause_id]=r.status;o.isoN[r.clause_id]=r.notes||''})}
-  rs=await fetchAll(c,'domain_outcomes');rs.forEach(function(r){fwO(N,r.project_id).dmo['d'+r.domain_no+'_'+r.outcome_idx]=r.achieved===true});
+  rs=R.project_governance;rs.forEach(function(r){(N.pgov[r.project_id]=N.pgov[r.project_id]||{})[r.doc_id]={st:r.compliance,note:r.notes||''}});
+  rs=R.project_forms;rs.forEach(function(r){var o=fwO(N,r.project_id);if(r.kind==='charter')o.charter=r.data||{};else o.tailor=r.data||{}});
+  rs=R.process_status;rs.forEach(function(r){fwO(N,r.project_id).proc[r.process_id]=r.status});
+  rs=R.step_status;rs.forEach(function(r){fwO(N,r.project_id).step[r.step_id]=r.status});
+  rs=R.stage_gates;rs.forEach(function(r){var o=fwO(N,r.project_id);o.gate[r.stage_id]=r.decision;o.gaten[r.stage_id]=r.notes||''});
+  rs=R.principle_ratings;rs.forEach(function(r){var o=fwO(N,r.project_id);o.pr['p'+r.principle_no]=String(r.level);o.prn['p'+r.principle_no]=r.notes||''});
+  rs=R.domain_ratings;rs.forEach(function(r){var o=fwO(N,r.project_id);o.dm['d'+r.domain_no]=String(r.level);o.dmn['d'+r.domain_no]=r.notes||''});
+  if(sb.has2){rs=R.iso_status;rs.forEach(function(r){var o=fwO(N,r.project_id);o.iso[r.clause_id]=r.status;o.isoN[r.clause_id]=r.notes||''})}
+  rs=R.domain_outcomes;rs.forEach(function(r){fwO(N,r.project_id).dmo['d'+r.domain_no+'_'+r.outcome_idx]=r.achieved===true});
   if(!okT('competencies')||!sb.has2){
     var src={rec:S.rec||{},fw:S.fw||{},comp:S.comp||[]};try{var jj=JSON.parse(store.get('groundwork-u2')||'null');if(jj)src=jj}catch(e){}
     Object.keys(RECMAP).forEach(function(k){if(RECMAP[k][2]&&!okT(RECMAP[k][0]))N.rec[k]=((src.rec||{})[k]||[]).filter(function(r){return N.projects.some(function(p){return p.id===r.project})})});
@@ -2382,11 +2431,11 @@ async function sbChecks(){
   var c=sbClient(),out=[];if(!c)return;
   var cnt=async function(t){try{var r=await c.from(t).select('*',{count:'exact',head:true});return r.error?{err:r.error.message||'error'}:{n:r.count}}catch(e){return {err:e.message||'error'}}};
   var refs=[['pmbok_processes',49,'PMBOK 6 processes'],['lifecycle_steps',42,'Lifecycle steps'],['lifecycle_stages',6,'Lifecycle stages'],['pmbok_principles',12,'PMBOK 7 principles'],['pmbok_domains',8,'PMBOK 7 domains']];
-  var reach=true;
-  for(var i=0;i<refs.length;i++){var r=await cnt(refs[i][0]);if(r.err)reach=reach&&false;out.push({ok:r.n===refs[i][1],label:refs[i][2],detail:r.err?r.err:r.n+' of '+refs[i][1]})}
-  var bad=[];
   var AT=APP_TABLES.filter(function(t){return okT(t)});
-  for(var j=0;j<AT.length;j++){var q=await cnt(AT[j]);if(q.err)bad.push(AT[j])}
+  var RR=await Promise.all(refs.map(function(x){return cnt(x[0])})),QQ=await Promise.all(AT.map(function(t){return cnt(t)}));
+  for(var i=0;i<refs.length;i++){var r=RR[i];out.push({ok:r.n===refs[i][1],label:refs[i][2],detail:r.err?r.err:r.n+' of '+refs[i][1]})}
+  var bad=[];
+  for(var j=0;j<AT.length;j++){if(QQ[j].err)bad.push(AT[j])}
   out.push({ok:!bad.length,label:'App tables ('+AT.length+')',detail:bad.length?'Not readable: '+bad.slice(0,4).join(', ')+(bad.length>4?'...':''):'All readable'});
   try{var up=await c.from('schema_info').select('value').eq('key','upgrade').maybeSingle();out.push({ok:!!(up.data&&+up.data.value>=5),label:'SQL upgrades',detail:up.data?'Level '+up.data.value+' of 6'+(+up.data.value<6?' (file 6 adds Polaris One server sync)':''):'Run upgrade files 1 to 6'})}catch(e){out.push({ok:false,label:'SQL upgrades',detail:'Run upgrade files 1 and 2'})}
   sb.checks=out;sb.checkedAt=new Date();
@@ -2405,10 +2454,13 @@ async function sbActivate(user){
   if(!sb.on){try{sb.local=JSON.parse(JSON.stringify(S))}catch(e){sb.local=null}}
   sb.on=true;sb.working='Loading data';boardRender(true);
   var ok=false;
+  if(gate.mode!=='loading'||gateEl().hidden)gateLoad('Verifying your access');
+  gateProg(10,'Verifying your access');
   try{await sbLoadAccess();
-    if(!sb.deny){await sbPull();await sbChecks();ok=true}
+    if(!sb.deny){await sbPull();ok=true;sbChecks().then(function(){boardRender(true)},function(){})}
     else{S=emptyState();sb.snap={};sb.pending=false;sb.err=sb.deny;render()}}
   catch(e){sb.err=e.message||String(e);sb.deny=sb.deny||('Loading failed: '+sb.err);sb.denyKind=sb.denyKind||'error';S=emptyState();sb.snap={};render()}
+  gateProg(100,'Done');gateHide();
   sb.working='';boardRender(true);setSaveLabel(ok?'Synced':'Blocked: no access verified');
 }
 async function sbSignIn(email,pw,signup){
@@ -2425,22 +2477,101 @@ async function sbSignIn(email,pw,signup){
 }
 async function sbSignOut(){
   try{var c=sbClient();if(c)await c.auth.signOut()}catch(e){}
-  var wasDeny=!!sb.deny;sb.on=false;sb.user=null;sb.profile=null;sb.access={};sb.adm=null;sb.legacy=false;sb.deny='';sb.denyKind='';sb.pending=false;clearTimeout(sb.retryT);if(wasDeny&&sb.local){S=sb.local}sb.msg='Signed out. Data stays in this browser.';sb.snap={};persist();render();boardRender(true);
+  var wasDeny=!!sb.deny;sb.on=false;sb.user=null;sb.profile=null;sb.access={};sb.adm=null;sb.legacy=false;sb.deny='';sb.denyKind='';sb.pending=false;clearTimeout(sb.retryT);if(wasDeny&&sb.local){S=sb.local}sb.msg='Signed out. Data stays in this browser.';sb.snap={};persist();render();boardRender(true);gate.msg='You have been signed out.';gate.err='';gateShow('signin');
 }
+
+/* ===== Sign-in gate and loading screen (Rev 42) ===== */
+var gate={mode:'',busy:false,msg:'',err:'',offline:false,pct:0,label:'',t0:0,slowT:null};
+function gateEl(){return document.getElementById('gate')}
+function gateLoad(label){gate.mode='loading';gate.pct=3;gate.label=label||'Loading';gate.t0=Date.now();var el=gateEl();if(!el)return;el.hidden=false;document.documentElement.classList.add('gate-on');gateDraw();clearTimeout(gate.slowT);gate.slowT=setTimeout(function(){var n=document.getElementById('gt-slow');if(n)n.hidden=false},12000)}
+function gateProg(pct,label){if(pct>gate.pct)gate.pct=pct;if(label)gate.label=label;var b=document.getElementById('gt-bar'),l=document.getElementById('gt-lab'),p=document.getElementById('gt-pct'),w=document.getElementById('gt-prog');if(b)b.style.width=gate.pct+'%';if(l)l.textContent=gate.label;if(p)p.textContent=Math.round(gate.pct)+'%';if(w)w.setAttribute('aria-valuenow',Math.round(gate.pct))}
+function gateShow(mode){clearTimeout(gate.slowT);gate.mode=mode;gate.busy=false;var el=gateEl();if(!el)return;el.hidden=false;document.documentElement.classList.add('gate-on');gateDraw()}
+function gateHide(){clearTimeout(gate.slowT);var el=gateEl();if(el)el.hidden=true;document.documentElement.classList.remove('gate-on')}
+function gateDraw(){
+  var el=gateEl();if(!el)return;var m=gate.mode,mk=document.querySelector('.brand .mark'),logo=mk?'<img class="g-logo" alt="" width="56" height="56" src="'+esc(mk.getAttribute('src')||'')+'">':'';
+  var em=esc((sb&&sb.email)||'');
+  var msg=(gate.err?'<p class="g-err" role="alert">'+esc(gate.err)+'</p>':'')+(gate.msg?'<p class="g-msg" role="status">'+esc(gate.msg)+'</p>':'');
+  var show='<label class="gt-show"><input type="checkbox" id="gt-show"> Show password</label>';
+  var h='<div class="g-card" role="dialog" aria-modal="true" aria-labelledby="gt-title">'+logo+'<div class="g-app">Altair Project Management</div>';
+  if(m==='loading'){
+    h+='<h1 id="gt-title">Loading your projects</h1><div id="gt-prog" class="gt-prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+Math.round(gate.pct)+'"><i id="gt-bar" style="width:'+gate.pct+'%"></i></div><div class="g-row"><span id="gt-lab" aria-live="polite">'+esc(gate.label)+'</span><b id="gt-pct">'+Math.round(gate.pct)+'%</b></div><p id="gt-slow" class="g-msg" hidden>Still working. The connection looks slow, please keep this page open.</p>';
+  }else if(m==='error'){
+    h+='<h1 id="gt-title">Cannot start</h1>'+msg+'<div class="g-acts"><button class="btn primary" type="button" data-g="reload">Try again</button><button class="btn" type="button" data-g="offline">Use without signing in</button></div>';
+  }else{
+    var title=m==='signup'?'Create account':m==='forgot'?'Reset password':m==='recovery'?'Set a new password':'Sign in';
+    h+='<h1 id="gt-title">'+title+'</h1>'+msg+'<form id="gtform" novalidate>';
+    if(m!=='recovery')h+='<label class="g-f">Email<input id="gt-email" type="email" autocomplete="username" inputmode="email" required value="'+em+'"></label>';
+    if(m==='signin')h+='<label class="g-f">Password<input id="gt-pass" class="g-pw" type="password" autocomplete="current-password" required></label>'+show;
+    if(m==='signup')h+='<label class="g-f">Password (at least 6 characters)<input id="gt-pass" class="g-pw" type="password" autocomplete="new-password" minlength="6" required></label><label class="g-f">Repeat password<input id="gt-pass2" class="g-pw" type="password" autocomplete="new-password" minlength="6" required></label>'+show;
+    if(m==='recovery')h+='<label class="g-f">New password (at least 6 characters)<input id="gt-pass" class="g-pw" type="password" autocomplete="new-password" minlength="6" required></label><label class="g-f">Repeat new password<input id="gt-pass2" class="g-pw" type="password" autocomplete="new-password" minlength="6" required></label>'+show;
+    if(m==='forgot')h+='<p class="g-help">Enter your email. We send a link to choose a new password; open it on this device.</p>';
+    h+='<button id="gt-go" class="btn primary gt-go" type="submit">'+(m==='signup'?'Create account':m==='forgot'?'Send reset link':m==='recovery'?'Save new password':'Sign in')+'</button></form><div class="g-links">';
+    if(m==='signin')h+='<button type="button" class="g-link" data-g="mode:forgot">Forgot password?</button><button type="button" class="g-link" data-g="mode:signup">Create account</button>';
+    else if(m!=='recovery')h+='<button type="button" class="g-link" data-g="mode:signin">Back to sign in</button>';
+    h+='</div>';
+    if(m==='signin')h+='<button type="button" class="g-off" data-g="offline">Use without signing in (data stays in this browser)</button>';
+  }
+  el.innerHTML=h+'</div>';
+  var f=document.getElementById(m==='recovery'||m==='signup'&&em?'gt-pass':'gt-email')||document.getElementById('gt-pass');
+  if(m!=='loading'&&m!=='error'){var fi=(m==='signin'&&em)?document.getElementById('gt-pass'):f;if(fi)setTimeout(function(){try{fi.focus()}catch(e){}},30)}
+}
+function gateFriendly(msg){msg=String(msg||'');if(/invalid login credentials/i.test(msg))return 'Email or password is incorrect.';if(/email not confirmed/i.test(msg))return 'Your email is not confirmed yet. Open the confirmation email we sent, then sign in.';if(/rate limit|too many/i.test(msg))return 'Too many attempts. Wait a few minutes and try again.';if(/already registered|already been registered/i.test(msg))return 'This email is already registered. Sign in or reset your password.';if(/failed to fetch|network/i.test(msg))return 'Cannot reach the server. Check your internet connection.';return msg||'Something went wrong.'}
+async function gateSubmit(e){
+  e.preventDefault();if(gate.busy)return;
+  var m=gate.mode,c=sbClient(),g=function(i){var n=document.getElementById(i);return n?n.value:''},em=g('gt-email').trim(),pw=g('gt-pass'),pw2=g('gt-pass2');
+  gate.err='';gate.msg='';
+  if(m!=='recovery'){if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){gate.err='Enter a valid email address.';gateDraw();return}sb.email=em}
+  if(m==='signin'&&!pw){gate.err='Enter your password.';gateDraw();return}
+  if((m==='signup'||m==='recovery')&&(pw.length<6||pw!==pw2)){gate.err=pw.length<6?'The password must have at least 6 characters.':'The two passwords are not the same.';sb.email=em||sb.email;gateDraw();return}
+  if(!c){gate.err='The database library is not loaded. Reload the page.';gateDraw();return}
+  gate.busy=true;var go=document.getElementById('gt-go');if(go){go.disabled=true;go.textContent=m==='signup'?'Creating account...':m==='forgot'?'Sending...':m==='recovery'?'Saving...':'Signing in...'}
+  var base=location.href.split('#')[0],r;
+  try{
+    if(m==='signin'){r=await c.auth.signInWithPassword({email:em,password:pw});if(r.error)throw r.error;gateLoad('Signing in');await sbActivate(r.data.session.user);gate.busy=false;return}
+    if(m==='signup'){r=await c.auth.signUp({email:em,password:pw,options:{emailRedirectTo:base}});if(r.error)throw r.error;
+      var u=r.data&&r.data.user;if(u&&u.identities&&u.identities.length===0)throw {message:'This email is already registered. Sign in or reset your password.'};
+      if(r.data&&r.data.session){gateLoad('Creating your account');await sbActivate(r.data.session.user);gate.busy=false;return}
+      gate.msg='Account created. Check your email and open the confirmation link, then sign in here.';gateShow('signin');return}
+    if(m==='forgot'){r=await c.auth.resetPasswordForEmail(em,{redirectTo:base});if(r&&r.error)throw r.error;gate.msg='If this email has an account, a reset link has been sent. Open it on this device.';gateShow('signin');return}
+    if(m==='recovery'){r=await c.auth.updateUser({password:pw});if(r.error)throw r.error;sb.recovery=false;try{history.replaceState(null,'',location.pathname+location.search)}catch(x){}
+      var sess=await c.auth.getSession();var us=(sess.data&&sess.data.session&&sess.data.session.user)||(r.data&&r.data.user);
+      if(us){gateLoad('Password saved');await sbActivate(us);gate.busy=false;return}
+      gate.msg='Password saved. Sign in with the new password.';gateShow('signin');return}
+  }catch(x){gate.busy=false;gate.err=gateFriendly(x&&x.message);gateShow(m)}
+}
+document.addEventListener('submit',function(e){if(e.target&&e.target.id==='gtform')gateSubmit(e)});
+document.addEventListener('change',function(e){if(e.target&&e.target.id==='gt-show'){document.querySelectorAll('#gate .g-pw').forEach(function(i){i.type=e.target.checked?'text':'password'})}});
+document.addEventListener('click',function(e){
+  var el=e.target.closest&&e.target.closest('[data-g],[data-act=gateopen]');if(!el)return;
+  if(el.dataset.act==='gateopen'){gate.err='';gate.msg='';gate.offline=false;gateShow('signin');return}
+  var a=el.dataset.g;
+  if(a==='reload'){location.reload();return}
+  if(a==='offline'){gate.offline=true;gate.err='';gate.msg='';gateHide();render();return}
+  if(a.indexOf('mode:')===0){var em=document.getElementById('gt-email');if(em)sb.email=em.value.trim();gate.err='';gate.msg='';gateShow(a.slice(5))}
+});
+
 function sbLoadLib(){
   var urls=['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js','https://unpkg.com/@supabase/supabase-js@2.117.2/dist/umd/supabase.js','https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.117.2/umd/supabase.min.js'];
   return new Promise(function(ok,no){var i=0;(function next(){if(window.supabase&&window.supabase.createClient)return ok();if(i>=urls.length)return no(new Error('lib'));var sc=document.createElement('script');sc.src=urls[i++];sc.onload=function(){if(window.supabase)ok();else next()};sc.onerror=next;document.head.appendChild(sc)})()})
 }
 async function sbBoot(){
   sbCfgLoad();boardRender(true);if(!HOSTED)setTimeout(tlBoot,0);
-  if(HOSTED||!sb.cfg)return;if(!window.supabase){try{await sbLoadLib()}catch(e){sb.err='The Supabase library could not be loaded. Check your internet connection and reload.';boardRender(true);return}}
-  var c=sbClient();if(!c)return;
+  if(HOSTED||!sb.cfg)return;
+  var hh=location.hash||'';sb.recovery=/type=recovery/.test(hh);
+  if(/error_description=/.test(hh)){try{gate.err=decodeURIComponent((hh.match(/error_description=([^&]+)/)||[])[1].replace(/\+/g,' '))}catch(e){gate.err='The link is invalid or has expired.'}sb.recovery=false;try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
+  gateLoad('Loading components');
+  if(!window.supabase){try{await sbLoadLib()}catch(e){sb.err='The Supabase library could not be loaded. Check your internet connection and reload.';boardRender(true);gate.err=sb.err;gateShow('error');return}}
+  var c=sbClient();if(!c){gateShow('signin');return}
+  try{c.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY'){sb.recovery=true;gate.err='';gateShow('recovery')}})}catch(e){}
+  gateProg(6,'Checking your sign-in');
   sbPing().then(function(){boardRender(true)});
-  try{var r=await c.auth.getSession();if(r.data&&r.data.session)await sbActivate(r.data.session.user)}catch(e){sb.err=e.message}
+  try{var r=await c.auth.getSession();if(r.data&&r.data.session&&!sb.recovery)await sbActivate(r.data.session.user)}catch(e){sb.err=e.message}
   /* Settings was opened only because this device had no local data yet; once a saved sign-in has loaded the database, go to Overview instead */
   if(autoSet&&sb.on&&sb.user&&!sb.deny&&view==='set'&&setSub==='acct')view='dash';
   autoSet=false;
-  if(!sb.user&&!S.projects.length&&view==='dash'){view='set';setSub='acct'}
+  if(sb.user){gateHide()}
+  else if(sb.recovery){gateShow('recovery')}
+  else if(!gate.offline){gateShow(gate.err?'forgot':'signin')}
   render();boardRender(true);
 }
 function keyRole(k){try{var p=k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');return JSON.parse(atob(p)).role}catch(e){return ''}}
@@ -2489,10 +2620,7 @@ function boardRender(force){
   if(!HOSTED&&!open)connForm='<div class="who"><div><b>'+esc(maskHost(cfg.url))+'</b><div class="note">Key '+esc(maskKey(cfg.key))+' · hidden for safety</div></div></div><div class="acts" style="margin-top:12px"><button class="btn" type="button" data-act="sbtoggle">Show settings</button><button class="btn" type="button" data-act="sbforget">Remove settings</button></div><p class="note">The URL and key are kept in this browser only. Never use a secret key here.</p>';
   var authForm=HOSTED?'':
    (sb.user?'<div class="who"><span class="av" style="margin:0">'+esc(initials(sb.user.email||'?'))+'</span><div><b>'+esc(sb.user.email||'')+'</b><div class="note">Signed in</div>'+(roleLabel()?'<div class="note">'+esc(roleLabel())+'</div>':'')+(function(){var m=myMemberMatch();return m?'<div class="note">Team member: <b>'+esc(m.name)+'</b></div>':'<div class="note">Not linked to a team member yet (Settings, Domains &amp; members, "This is me").</div>'})()+'</div></div>'+(!sb.legacy&&!sb.has2?'<p class="note" style="margin-top:10px">Run <b>groundwork_supabase_upgrade_2.sql</b> to sync Supply chain, Finance, and ISO 9001 data. Until then they stay in this browser only.</p>':'')+(sb.legacy?'<p class="note" style="margin-top:10px">Run <b>groundwork_supabase_upgrade_1.sql</b> in the SQL Editor to turn on the admin account and per-project access. Until then everything you create stays private to this account.</p>':'')+'<div class="acts" style="margin-top:12px"><button class="btn" data-act="sbsignout">Sign out</button></div>':
-   '<form data-sbf="auth" class="bform"><label class="fld">Email<input id="sb-email" type="email" required value="'+esc(sb.email)+'" autocomplete="username"></label>'+
-   '<label class="fld">Password<input id="sb-pass" type="password" minlength="6" required autocomplete="current-password"></label>'+
-   '<div class="acts"><button class="btn primary" type="submit" value="signin"'+(cfg?'':' disabled')+'>Sign in</button><button class="btn" type="submit" value="signup" formnovalidate'+(cfg?'':' disabled')+'>Create account</button></div>'+
-   (cfg?'':'<p class="note">Save the connection settings first.</p>')+'</form>');
+   '<p class="note">You are signed out. Your projects stay hidden until you sign in.</p><div class="acts"><button class="btn primary" type="button" data-act="gateopen">Sign in</button></div>');
   var checks=sb.checks?'<ul class="chk-list">'+sb.checks.map(function(x){return '<li class="'+(x.ok?'ok':'bad')+'"><span class="mk">'+(x.ok?'✓':'✕')+'</span><span>'+esc(x.label)+'</span><span class="note">'+esc(x.detail)+'</span></li>'}).join('')+'</ul>'+(sb.checkedAt?'<p class="note">Checked at '+fmtT(sb.checkedAt)+'</p>':''):'<p class="note">'+(HOSTED?'Not available in this view.':'Sign in to check that the tables and PMBOK data exist.')+'</p>';
   var lc=sb.local?countRows(sb.local):0;
   var dataPanel=HOSTED?'<p class="note">Data is saved with this page. To use Supabase, open the standalone file.</p>':
@@ -3940,6 +4068,8 @@ var setSub='acct';
 var td0={member:'',top:null};
 function top3Get(){var d=cfgGet('top3')||{};return d.date===todayYmd()?d.ids:[]}
 function top3Set(ids){cfgSet('top3',{date:todayYmd(),ids:ids})}
+function tdIc(d){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+d+'"/></svg>'}
+function tdKpi(d,n,l,cls){return '<div class="panel kpi kt'+cls+'"><span class="ic" aria-hidden="true">'+tdIc(d)+'</span><div><div class="n">'+n+'</div><div class="l">'+esc(l)+'</div></div></div>'}
 function renderToday(){
   calRestore();usData();usLoad();var T=todayYmd(),me=td0.member||(myMemberMatch()||{}).id||'',w=workCfg();
   if(calConfigured())calSync(false).then(function(ch){if(ch&&view==='today')render()});
@@ -3949,10 +4079,12 @@ function renderToday(){
   var row=function(t){var p=rpProj(t.project),on=top.indexOf(t.id)>-1;return '<div class="item"><button class="star'+(on?' on':'')+'" type="button" data-act="top3" data-id="'+t.id+'" aria-pressed="'+on+'" title="Top 3 of today">'+(on?'★':'☆')+'</button><div style="flex:1;min-width:0"><b>'+esc(t.title)+'</b><div class="note"><span class="mono">'+esc(t.no||'')+'</span> '+esc(p?p.name:'')+(t.due?' | due '+esc(rpDate(t.due)):'')+(t.due&&t.due<T?' <span class="badge-x bad">late</span>':'')+'</div></div><select data-tst="'+t.id+'" aria-label="Status">'+ST.map(function(s){return '<option value="'+s.k+'"'+(t.status===s.k?' selected':'')+'>'+s.l+'</option>'}).join('')+'</select><button class="btn sm" type="button" data-act="edit" data-id="'+t.id+'">Open</button></div>'};
   var evs=calOn(T).filter(function(e){return e.busy!=='FREE'}),ev2=calOn(ds(TODAY+1)).filter(function(e){return e.busy!=='FREE'}),busy=calBusy(T),free=Math.max(0,workMinutes()-busy);
   var calCard=calConfigured()?'<div class="panel"><h2>Outlook today</h2>'+(evs.length?'<div class="list">'+evs.map(function(e){return calRow(e)}).join('')+'</div>':'<p class="note">No meetings today.</p>')+(ev2.length?'<h3 style="margin-top:10px">Tomorrow</h3><div class="list">'+ev2.slice(0,6).map(function(e){return calRow(e)}).join('')+'</div>':'')+(cal.err?'<p class="note" style="color:var(--bad)">'+esc(trunc(cal.err.msg,140))+'</p>':'')+'</div>':'';
-  return '<div class="kn"><div class="kfilters"><label class="fld" style="margin:0">Showing work of<select data-tdm aria-label="Member"><option value="">Everyone</option>'+S.members.map(function(m){return '<option value="'+m.id+'"'+(m.id===me?' selected':'')+'>'+esc(m.name)+'</option>'}).join('')+'</select></label></div>'+
-   '<div class="grid">'+
-   '<div class="panel kpi s3"><div class="n">'+due.length+'</div><div class="l">Due today or late</div></div><div class="panel kpi s3"><div class="n">'+doing.length+'</div><div class="l">In progress</div></div>'+
-   '<div class="panel kpi s3"><div class="n">'+(isWorkDay(T)?Math.round(workMinutes()/60*10)/10+' h':'Off')+'</div><div class="l">Working time ('+w.start+'-'+w.end+')</div></div><div class="panel kpi s3"><div class="n">'+(calConfigured()?Math.round(free/60*10)/10+' h':'-')+'</div><div class="l">Free after meetings</div></div></div>'+
+  return '<div class="kn"><div class="kfilters"><label class="who-pick"><span class="ic" aria-hidden="true">'+tdIc('M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-7 8-7s8 3 8 7')+'</span><span class="who-cap">Showing work of</span><select data-tdm aria-label="Showing work of"><option value="">Everyone</option>'+S.members.map(function(m){return '<option value="'+m.id+'"'+(m.id===me?' selected':'')+'>'+esc(m.name)+'</option>'}).join('')+'</select></label></div>'+
+   '<div class="tdgrid">'+
+   tdKpi('M12 8v4l2.5 2.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',due.length,'Due today or late',due.length?' warn':'')+
+   tdKpi('M5 12a7 7 0 0 1 12-5l2 2M19 4v5h-5M19 12a7 7 0 0 1-12 5l-2-2M5 20v-5h5',doing.length,'In progress','')+
+   tdKpi('M4 8h16v11H4zM9 8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M4 13h16',isWorkDay(T)?Math.round(workMinutes()/60*10)/10+' h':'Off','Working time ('+w.start+'-'+w.end+')','')+
+   tdKpi('M5 4h14M5 20h14M7 4v3a5 5 0 0 0 2 4 5 5 0 0 1-2 4v5M17 4v3a5 5 0 0 1-2 4 5 5 0 0 0 2 4v5',calConfigured()?Math.round(free/60*10)/10+' h':'-','Free after meetings','')+'</div>'+
    '<div class="panel" style="margin-top:14px"><h2>Top 3 of today</h2><p class="gtip">'+esc(GUIDE['today.top'])+'</p>'+(topT.length?'<div class="list">'+topT.map(row).join('')+'</div>':'<p class="note">Tap the star on up to three items below.</p>')+'</div>'+
    '<div class="grid2" style="margin-top:14px"><div class="panel"><h2>Due today or late</h2>'+(due.length?'<div class="list">'+due.map(row).join('')+'</div>':'<p class="note">Nothing due. Well done.</p>')+'<h3 style="margin-top:12px">In progress</h3>'+(doing.length?'<div class="list">'+doing.map(row).join('')+'</div>':'<p class="note">Nothing in progress.</p>')+'<h3 style="margin-top:12px">Next 7 days</h3>'+(soon.length?'<div class="list">'+soon.slice(0,8).map(row).join('')+'</div>':'<p class="note">Nothing coming up.</p>')+'</div>'+calCard+'</div></div>'}
 /* ---------- Reports view ---------- */
@@ -4587,7 +4719,7 @@ function setState(s){S=s;render()}
 function emptyState(){return {v:1,sample:false,projects:[],members:[{id:uid(),name:'Me',no:'MBR-0001'}],tasks:[],fw:{},rec:{},comp:[],fn:[],cat:[],gov:[],pgov:{},seq:{MBR:1}}}
 function startLocal(){
   var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
-  if(!(s&&s.projects&&s.projects.length)&&!HOSTED){view='set';setSub='acct';autoSet=true}
+  if(!(s&&s.projects&&s.projects.length)&&!HOSTED&&!(BUILTIN&&BUILTIN.url)){view='set';setSub='acct';autoSet=true}
   setState(s&&s.tasks?s:emptyState());
   setSaveLabel(s?'Saved on this device':'');
 }
