@@ -73,6 +73,9 @@ html.gate-on body{overflow:hidden}
 .kpi.kt.warn .ic{background:rgba(190,30,45,.12);color:var(--bad)}
 .kpi.kt .n{font-size:24px}
 @media (max-width:640px){.tdgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi.kt{flex-direction:column;align-items:flex-start;gap:8px;padding:12px}.kpi.kt .n{font-size:22px}.kpi.kt .l{margin-top:2px}.who-cap{display:none}}
+.refnew{display:flex;gap:6px;margin-top:6px}
+.refnew input{flex:1;min-width:0;padding:8px 10px;border:1px dashed var(--line);border-radius:8px;background:var(--bg);font:inherit;font-size:14px}
+.refnew .btn{white-space:nowrap}
 .appver{margin-left:0;font:500 12px/1.2 ui-monospace,Menlo,Consolas,monospace;color:var(--mut,#667);white-space:nowrap;padding:3px 8px;border:1px solid var(--line);border-radius:999px;user-select:text;align-self:center}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:14px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;border-bottom:1px solid var(--line)}
 .brand{font:700 22px/1 var(--f-display);letter-spacing:-.02em;margin-right:auto;display:flex;align-items:baseline;gap:10px;min-width:0}
@@ -517,7 +520,7 @@ header.top{background:rgba(255,255,255,.84);-webkit-backdrop-filter:blur(6px);ba
   <header class="top">
     <button class="menubtn" id="menubtn" type="button" data-act="dtoggle" aria-label="Menu" aria-expanded="false" aria-controls="drawer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <div class="brand"><img class="mark" alt="" width="36" height="36" src="data:image/png;base64,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">Altair Project Management <small id="today"></small></div>
-    <span class="appver" id="appver" title="Version 2026.10.28 · Revision 42">Rev 42 · v2026.10.28</span>
+    <span class="appver" id="appver" title="Version 2026.10.28 · Revision 43">Rev 43 · v2026.10.28</span>
     <nav class="tabs" role="tablist" id="tabs"></nav>
     <button class="btn primary" data-act="new">+ New task</button>
     <span class="save" id="save" aria-live="polite"></span>
@@ -1114,7 +1117,20 @@ function renderPerf(ts){
 }
 
 /* ---------- modal ---------- */
-var editing=null,confirmDel=false;
+var editing=null,confirmDel=false,pendRec=null;
+function endModal(){var back=(editing&&pendRec)?pendRec:null;editing=null;rec=back;pendRec=null;gd=null;mt=null;drawModal()}
+function refCreate(fk){
+  var m=modOf(rec.m),r=rec.r,nm=($('#r-'+fk+'-new')||{}).value;nm=String(nm||'').trim();
+  if(!nm){toast('Type the name of the new activity or task first.');var i=$('#r-'+fk+'-new');if(i)i.focus();return}
+  var pid=($('#r-project')||{}).value||r.project||F.project||'';
+  m.fields.forEach(function(f){if(f.t==='calc')return;var el=$('#r-'+f.k);if(el)r[f.k]=el.value});
+  var pe=$('#r-parent');rec.pv=pe?pe.value:rec.pv;
+  if(!pid){pid=(S.projects[0]||{}).id||''}
+  if(pid&&!guard(pid,2))return;
+  pendRec=rec;pendRec.link=fk;rec=null;gd=null;mt=null;confirmDel=false;
+  editing={id:null,title:nm,desc:'',status:'todo',priority:'sedang',project:pid,assignee:F.member||'',start:'',due:'',parent:'',fromRec:{m:rec&&rec.m||pendRec.m,t:pendRec.r.title||pendRec.r.code||''}};
+  drawModal();setTimeout(function(){var i=$('#f-desc');if(i)i.focus()},0);
+}
 function openModal(id,st){
   confirmDel=false;
   var t=id?S.tasks.find(function(x){return x.id===id}):{id:null,title:'',desc:'',status:st||'todo',priority:'sedang',project:F.project||(S.projects[0]||{}).id||'',assignee:F.member||'',start:'',due:'',parent:''};
@@ -1129,6 +1145,7 @@ function drawModal(){
   var t=editing;if(!t){$('#modal').innerHTML='';return}
   $('#modal').innerHTML='<div class="scrim" data-act="scrim"><form class="modal" id="tform" role="dialog" aria-modal="true" aria-label="Task details">'+
    '<h2>'+(t.id?'Edit task <span class="idtag mono">'+esc(t.no||'')+'</span>':'New task')+'</h2>'+
+   (t.fromRec?'<p class="note" style="margin:-6px 0 12px">Creating from the Requirements &amp; WBS entry'+(t.fromRec.t?' "'+esc(t.fromRec.t)+'"':'')+'. When you save, you return to that entry with this task linked. Cancel returns without linking.</p>':'')+
    parentSel('f-parent',S.tasks,t.id,t.parent||'','task')+
    '<label class="fld">Title'+gt('task.title')+'<input id="f-title" required value="'+esc(t.title)+'" placeholder="What needs to be done?"></label>'+
    '<label class="fld">Notes'+gt('task.desc')+'<textarea id="f-desc" rows="3">'+esc(t.desc)+'</textarea></label>'+
@@ -1144,7 +1161,7 @@ function drawModal(){
    (t.id?'<button class="btn" type="button" data-act="rpdf" data-id="'+t.id+'">PDF report</button><button class="btn danger sp" type="button" data-act="deltask">'+(confirmDel?'Click again to delete':'Delete')+'</button>':'')+'</div></form></div>';
 }
 function saveModal(){
-  var t=editing;
+  var t=editing;delete t.fromRec;
   t.title=$('#f-title').value.trim();if(!t.title)return;
   if(t.id){var ot=tk(t.id);if(ot&&!guard(ot.project,3))return}
   if(!guard($('#f-proj').value,t.id?3:2))return;
@@ -1155,14 +1172,16 @@ function saveModal(){
   if(t.id){var i=S.tasks.findIndex(function(x){return x.id===t.id});S.tasks[i]=t;
     if(pf&&reparent(S.tasks,t,pf.value,'TSK')){var pt=tk(t.parent);if(pt){var sb2=subtree(S.tasks,t.id);S.tasks.forEach(function(x){if(sb2[x.id])x.project=pt.project})}}}
   else{t.id=uid();t.parent=pf?pf.value:'';t.no=nextNo('TSK',t.parent?tk(t.parent):null);S.tasks.push(t)}
-  editing=null;rec=null;gd=null;mt=null;drawModal();commit();
+  var back=pendRec;editing=null;rec=null;gd=null;mt=null;pendRec=null;
+  if(back){back.r[back.link]=t.id;rec=back}
+  drawModal();commit();
 }
 
 /* ---------- events ---------- */
 document.addEventListener('click',function(e){
   var el=e.target.closest('[data-act]');if(!el)return;
   var a=el.dataset.act;
-  if(a==='scrim'){if(e.target===el){editing=null;rec=null;gd=null;mt=null;drawModal()}return}
+  if(a==='scrim'){if(e.target===el){endModal()}return}
   if(a==='setme'){cfgSet('me',el.dataset.id);render();return}
   if(a.indexOf('adm')===0&&admAct(a,el))return;
   if(a==='tab'||a==='setsub')autoSet=false;
@@ -1210,7 +1229,8 @@ document.addEventListener('click',function(e){
   if(a==='new'){if(!canAny(2)){toast('You do not have Input access to any project.');return}openModal(null,el.dataset.st);return}
   if(a==='admreload'){sb.adm=null;render();return}
   if(a==='edit'){openModal(el.dataset.id);return}
-  if(a==='close'){editing=null;rec=null;gd=null;mt=null;drawModal();return}
+  if(a==='close'){endModal();return}
+  if(a==='refnew'){if(rec)refCreate(el.dataset.f);return}
   if(a==='deltask'){
     if(!guard(editing.project,3))return;
     if(!confirmDel){confirmDel=true;drawModal();return}
@@ -1219,7 +1239,8 @@ document.addEventListener('click',function(e){
   if(a==='delmem'){if(!adminOnly())return;S.tasks.forEach(function(t){if(t.assignee===el.dataset.id)t.assignee=''});S.members=S.members.filter(function(m){return m.id!==el.dataset.id});if(F.member===el.dataset.id)F.member='';commit();return}
 });
 document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'&&(editing||rec||gd)){editing=null;rec=null;gd=null;mt=null;drawModal()}
+  if(e.key==='Escape'&&(editing||rec||gd)){endModal()}
+  if(e.key==='Enter'&&e.target&&e.target.dataset&&e.target.dataset.refnew&&rec){e.preventDefault();refCreate(e.target.dataset.refnew)}
   if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('card')){e.preventDefault();openModal(e.target.dataset.id)}
 });
 document.addEventListener('submit',function(e){
@@ -1856,9 +1877,11 @@ function renderFw(){
 function drawRec(){
   var m=modOf(rec.m),r=rec.r;
   $('#modal').innerHTML='<div class="scrim" data-act="scrim"><form class="modal" id="rform" role="dialog" aria-modal="true" aria-label="'+esc(m.t)+'"><h2>'+(rec.isNew?'New entry':'Edit entry <span class="idtag mono">'+esc(r.no||'')+'</span>')+' · '+esc(m.t)+'</h2>'+
-   parentSel('r-parent',recsOf(m.k,F.project),rec.isNew?null:r.id,r.parent||'','item')+
+   parentSel('r-parent',recsOf(m.k,F.project),rec.isNew?null:r.id,rec.pv!=null?rec.pv:(r.parent||''),'item')+
    '<div class="fgrid">'+m.fields.filter(function(f){return f.t!=='calc'}).map(function(f,i){var v=r[f.k]==null?'':r[f.k],id='r-'+f.k;
-     var inp=f.t==='ref'?'<select id="'+id+'"><option value="">None</option>'+refOpts(f.r,F.project).map(function(x){return '<option value="'+x.id+'"'+(String(v)===x.id?' selected':'')+'>'+esc(x.l)+'</option>'}).join('')+'</select>':
+     var inp=f.t==='ref'?(function(){var pj=r.project||F.project,ol=refOpts(f.r,pj),has=ol.some(function(x){return x.id===String(v)}),h='<select id="'+id+'"><option value="">None</option>'+ol.map(function(x){return '<option value="'+x.id+'"'+(String(v)===x.id?' selected':'')+'>'+esc(x.l)+'</option>'}).join('')+(v&&!has&&refLabel(f.r,v)?'<option value="'+esc(v)+'" selected>'+esc(refLabel(f.r,v))+'</option>':'')+'</select>';
+        if(f.r==='task')h+='<span class="refnew"><input id="'+id+'-new" data-refnew="'+f.k+'" placeholder="Or type a new name" autocomplete="off" aria-label="New activity or task name"><button type="button" class="btn sm" data-act="refnew" data-f="'+f.k+'">+ Create</button></span>';
+        return h})():
       f.t==='area'?'<textarea id="'+id+'" rows="3">'+esc(v)+'</textarea>':
       f.t==='sel'?'<select id="'+id+'"><option value="">Select</option>'+f.o.map(function(x){return '<option'+(String(v)===x?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select>':
       '<input id="'+id+'" type="'+(f.t==='date'?'date':f.t==='num'?'number':'text')+'"'+(f.t==='num'?' step="any"':'')+' value="'+esc(v)+'" placeholder="'+esc(f.ph||'')+'"'+(f.k==='title'?' required':'')+'>';
