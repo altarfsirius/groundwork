@@ -27,6 +27,8 @@
   --good:#1f7a45; --warn:#a3640b; --bad:#b3341f; --bad-soft:#f6dcd6; --warn-soft:#f6e6c8; --good-soft:#d6eedd;
   --st-todo:#8a9692; --st-doing:#2a6fb0; --st-hold:#9a6a12; --st-review:#6b4fb0; --st-cancel:#b4483c; --st-done:#1f7a45;
   --shadow:0 1px 2px rgba(20,35,30,.08); color-scheme:light;
+  /* Rev 63: Board cards. Task = soft green, WBS item = soft blue. */
+  --card-task:#eaf5ef; --card-task-line:#c5e0d2; --card-wbs:#e8f0fa; --card-wbs-line:#bcd2ec;
   --f-display:'Bricolage Grotesque','IBM Plex Sans',system-ui,sans-serif;
   --f-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
@@ -119,6 +121,9 @@ nav.tabs button[aria-selected="true"]{background:var(--surface);color:var(--fg);
 .col h3 span{margin-left:auto;font:400 12px var(--f-mono);color:var(--muted)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 11px;display:flex;flex-direction:column;gap:7px;cursor:grab;box-shadow:var(--shadow);text-align:left;width:100%}
 .card:hover{border-color:var(--muted)}
+.card{background:var(--card-task);border-color:var(--card-task-line)}
+.card.sub{border-left:3px solid var(--accent)}
+.card .t .rtg{margin:-2px 4px -2px -4px;vertical-align:baseline}
 .card.dragging{opacity:.4}
 .card .t{font-weight:500;overflow-wrap:anywhere}
 .card.done .t{color:var(--muted);text-decoration:line-through}
@@ -173,7 +178,7 @@ nav.tabs button[aria-selected="true"]{background:var(--surface);color:var(--fg);
 .tl-bar{position:absolute;top:7px;height:22px;border-radius:5px;border:0;color:#fff;font-size:11.5px;font-weight:500;padding:0 8px;text-align:left;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .tl-bar.done{opacity:.45}
 .tl-bar.wbs{background:transparent!important;border:2px dashed;font-weight:600}
-.wcard{background:var(--surface);border:1px dashed var(--line);border-radius:8px;padding:10px 11px;display:flex;flex-direction:column;gap:7px;cursor:pointer;text-align:left;width:100%}
+.wcard{background:var(--card-wbs);border:1px dashed var(--card-wbs-line);border-radius:8px;padding:10px 11px;display:flex;flex-direction:column;gap:7px;cursor:pointer;text-align:left;width:100%}
 .wcard .t{font-weight:500}.wcard .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px}.wbs-ty{font-weight:600}
 .wbs-tg{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--mut,inherit);white-space:nowrap}
 .today{position:absolute;top:0;bottom:0;width:2px;background:var(--bad);z-index:2;pointer-events:none}
@@ -528,7 +533,7 @@ header.top{background:rgba(255,255,255,.84);-webkit-backdrop-filter:blur(6px);ba
   <header class="top">
     <button class="menubtn" id="menubtn" type="button" data-act="dtoggle" aria-label="Menu" aria-expanded="false" aria-controls="drawer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <div class="brand"><img class="mark" alt="" width="36" height="36" src="data:image/png;base64,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">Altair Project Management <small id="today"></small></div>
-    <span class="appver" id="appver" title="Version 2026.11.09 · Revision 62">Rev 62 · v2026.11.09</span>
+    <span class="appver" id="appver" title="Version 2026.11.09 · Revision 64">Rev 64 · v2026.11.09</span>
     <nav class="tabs" role="tablist" id="tabs"></nav>
     <button class="btn primary" data-act="new">+ New task</button>
     <span class="save" id="save" aria-live="polite"></span>
@@ -684,7 +689,7 @@ function wbsDates(r,seen){
   return a===null?null:{a:a,b:b};
 }
 function wbsItems(){
-  if(F.wbs===false||F.member||F.kind==='activity'||F.kind==='action')return [];
+  if(F.wbs!==true||F.member||F.kind==='activity'||F.kind==='action')return [];
   var q=(F.q||'').toLowerCase(),ty=(F.kind||'').indexOf('sc:')===0?F.kind.slice(3):'';
   return ((S.rec&&S.rec.scope)||[]).filter(function(r){return (!F.project||r.project===F.project)&&(!ty||r.type===ty)&&(!q||((r.title||'')+' '+(r.code||'')).toLowerCase().indexOf(q)>-1)});
 }
@@ -767,12 +772,14 @@ function renderFilters(){
    '<button class="pchip add" data-act="newproj">+ Project</button></div>'+
    (fwv?'':'<input id="fq" type="search" placeholder="Search tasks" aria-label="Search tasks" value="'+esc(F.q)+'">')+
    (fwv?'':'<select id="fm" aria-label="Filter by assignee"><option value="">All members</option>'+S.members.map(function(m){return '<option value="'+m.id+'"'+(F.member===m.id?' selected':'')+'>'+esc(m.name)+'</option>'}).join('')+'</select>')+
-   (fwv?'':'<select id="ft" aria-label="Filter by type"><option value="">All types</option><option value="activity"'+(F.kind==='activity'?' selected':'')+'>Activities</option><option value="action"'+(F.kind==='action'?' selected':'')+'>Actions (sub-items)</option><optgroup label="Linked to Requirements &amp; WBS">'+SC_TYPES.map(function(x){return '<option value="sc:'+x+'"'+(F.kind==='sc:'+x?' selected':'')+'>'+x+'</option>'}).join('')+'</optgroup></select>'+((view==='board'||view==='time')?'<label class="wbs-tg"><input type="checkbox" id="fwbs"'+(F.wbs===false?'':' checked')+'> Show WBS items</label>':''));
+   (fwv?'':'<select id="ft" aria-label="Filter by type"><option value="">All types</option><option value="activity"'+(F.kind==='activity'?' selected':'')+'>Activities</option><option value="action"'+(F.kind==='action'?' selected':'')+'>Actions (sub-items)</option><optgroup label="Linked to Requirements &amp; WBS">'+SC_TYPES.map(function(x){return '<option value="sc:'+x+'"'+(F.kind==='sc:'+x?' selected':'')+'>'+x+'</option>'}).join('')+'</optgroup></select>'+((view==='board'||view==='time')?'<label class="wbs-tg"><input type="checkbox" id="fwbs"'+(F.wbs===true?' checked':'')+'> Show WBS items</label>':''));
 }
 function card(t){
   var m=member(t.assignee),p=project(t.project);
-  return '<div class="card'+(t.status==='done'?' done':'')+'" draggable="true" tabindex="0" role="button" data-act="edit" data-id="'+t.id+'">'+
-    '<div class="t"><span class="idtag mono">'+esc(t.no||'')+'</span>'+esc(t.title)+'</div>'+
+  var kidsN=S.tasks.filter(function(x){return x.parent===t.id}).length,isSub=!!(t.parent&&tk(t.parent)),bc=(fwCol.bd||[]).indexOf(t.id)>-1;
+  var btg=kidsN?'<button type="button" class="rtg" data-act="bdtoggle" data-id="'+t.id+'" aria-expanded="'+(bc?'false':'true')+'" aria-label="'+(bc?'Show':'Hide')+' sub-tasks of '+esc(t.no||'')+'" title="'+(bc?'Show':'Hide')+' '+kidsN+' sub-task'+(kidsN>1?'s':'')+'">'+(bc?'▸':'▾')+'</button>':'';
+  return '<div class="card'+(t.status==='done'?' done':'')+(isSub?' sub':'')+(kidsN?' parent':'')+'" draggable="true" tabindex="0" role="button" data-act="edit" data-id="'+t.id+'">'+
+    '<div class="t">'+btg+(isSub?'<span class="note">↳ </span>':'')+'<span class="idtag mono">'+esc(t.no||'')+'</span>'+esc(t.title)+'</div>'+
     '<div class="meta"><span class="chip p-'+t.priority+'">'+esc((PR.find(function(x){return x.k===t.priority})||{}).l)+'</span>'+
     (p?'<span><i class="dot" style="background:'+p.color+'"></i> '+esc(p.name)+'</span>':'')+
     (t.due?'<span class="due'+(late(t)?' late':'')+'">'+(late(t)?'Overdue · ':'')+fd(t.due)+'</span>':'')+
@@ -790,7 +797,13 @@ function wcard(r){
 }
 function renderBoard(){
   var ts=visible(),wb=wbsItems();
-  return '<div class="board">'+ST.map(function(s){
+  /* Rev 63: hide the sub-tasks of a collapsed parent card (any depth). */
+  var bcol=fwCol.bd||[],byId={};S.tasks.forEach(function(x){byId[x.id]=x});
+  function bHidden(t){var g=0,c=t.parent;while(c&&byId[c]&&g++<40){if(bcol.indexOf(c)>-1)return true;c=byId[c].parent}return false}
+  var anyParent=ts.some(function(t){return S.tasks.some(function(x){return x.parent===t.id})}),nHid=ts.filter(bHidden).length;
+  ts=ts.filter(function(t){return !bHidden(t)});
+  var bbar=anyParent?'<div class="rtbar"><button type="button" class="btn sm" data-act="bdexpall">Show all sub-tasks</button><button type="button" class="btn sm" data-act="bdcolall">Hide all sub-tasks</button>'+(nHid?'<span class="note">'+nHid+' sub-tasks hidden</span>':'')+'</div>':'';
+  return bbar+'<div class="board">'+ST.map(function(s){
     var items=ts.filter(function(t){return t.status===s.k}),wi=wb.filter(function(r){return (SC_COL[r.status]||'todo')===s.k});
     return '<section class="col" data-col="'+s.k+'"><h3><i style="background:'+s.c+'"></i>'+s.l+'<span>'+(items.length+wi.length)+'</span></h3>'+
       items.map(card).join('')+wi.map(wcard).join('')+
@@ -845,6 +858,11 @@ function renderTime(){
   var min=Math.min(TODAY-3,Math.min.apply(null,ts.map(function(x){return x.a})))-2;
   var max=Math.max(TODAY+20,Math.max.apply(null,ts.map(function(x){return x.b})))+3;
   var DW=30,days=max-min+1,W=days*DW;
+  /* Rev 63: collapse / expand sub-tasks on the timeline. A task is a parent when another dated task of the same project has an ID starting with its ID plus a dot. */
+  var tk={},tcol=fwCol.tl||[];
+  ts.forEach(function(x){if(x.t&&x.t.no){var a=x.t.no.split('.');for(var i=1;i<a.length;i++){var k=x.t.project+'|'+a.slice(0,i).join('.');tk[k]=(tk[k]||0)+1}}});
+  function tHidden(x){if(!x.t||!x.t.no)return false;var a=x.t.no.split('.');for(var i=1;i<a.length;i++){if(tcol.indexOf(x.t.project+'|'+a.slice(0,i).join('.'))>-1)return true}return false}
+  var tAll=ts.length,tShow=ts.filter(function(x){return !tHidden(x)}),tHid=tAll-tShow.length,tAny=Object.keys(tk).length>0;
   var ms='',cur=null,run=0;
   for(var d=min;d<=max;d++){
     var dt=new Date(d*DAY),key=dt.getUTCFullYear()*12+dt.getUTCMonth();
@@ -854,15 +872,18 @@ function renderTime(){
   ms+='<span style="width:'+run*DW+'px">'+cur_l+'</span>';
   var dh='';for(var e=min;e<=max;e++){var w=new Date(e*DAY).getUTCDay();dh+='<span class="'+(w===0||w===6?'we':'')+'">'+new Date(e*DAY).getUTCDate()+'</span>'}
   var tx=(TODAY-min)*DW+DW/2;
-  var rows=ts.map(function(x){
+  var rows=tShow.map(function(x){
     if(x.w){var wp=project(x.w.project),wc=wp?wp.color:'#667';
       return '<div class="tl-row"><div class="tl-lab" title="'+esc((x.w.type||'WBS')+': '+(x.w.title||''))+'"><i class="dot" style="background:'+wc+'"></i><span class="idtag mono">'+esc(x.w.code||'')+'</span>'+esc(x.w.title||'')+'<i class="tl-rs" aria-hidden="true"></i></div>'+
       '<div class="tl-track" style="width:'+W+'px"><button class="tl-bar wbs'+(x.w.status==='Accepted'?' done':'')+'" data-act="redit" data-m="scope" data-id="'+x.w.id+'" title="'+esc((x.w.type||'WBS')+' · '+(x.w.status||''))+'" style="left:'+(x.a-min)*DW+'px;width:'+((x.b-x.a+1)*DW-2)+'px;color:'+wc+';border-color:'+wc+'">'+esc(x.w.type||'WBS')+': '+esc(x.w.title||'')+'</button></div></div>'}
     var p=project(x.t.project),col=p?p.color:'#667';
-    return '<div class="tl-row"><div class="tl-lab" title="'+esc(x.t.title)+'"><i class="dot" style="background:'+col+'"></i><span class="idtag mono">'+esc(x.t.no||'')+'</span>'+esc(x.t.title)+'<i class="tl-rs" aria-hidden="true"></i></div>'+
+    var tn=x.t.no||'',tkey=x.t.project+'|'+tn,tkc=tk[tkey]||0,tc=tcol.indexOf(tkey)>-1,tdep=(tn.match(/\./g)||[]).length;
+    var ttg=tkc?'<button type="button" class="rtg" data-act="tltoggle" data-key="'+esc(tkey)+'" aria-expanded="'+(tc?'false':'true')+'" aria-label="'+(tc?'Expand':'Collapse')+' '+esc(tn)+'">'+(tc?'▸':'▾')+'</button>':'';
+    return '<div class="tl-row"><div class="tl-lab" style="padding-left:'+(10+Math.min(tdep,4)*12)+'px" title="'+esc(x.t.title)+'">'+ttg+'<i class="dot" style="background:'+col+'"></i><span class="idtag mono">'+esc(x.t.no||'')+'</span>'+esc(x.t.title)+'<i class="tl-rs" aria-hidden="true"></i></div>'+
       '<div class="tl-track" style="width:'+W+'px"><button class="tl-bar'+(x.t.status==='done'?' done':'')+'" data-act="edit" data-id="'+x.t.id+'" style="left:'+(x.a-min)*DW+'px;width:'+((x.b-x.a+1)*DW-2)+'px;background:'+col+'">'+(x.t.status==='done'?'✓ ':'')+esc(x.t.title)+'</button></div></div>';
   }).join('');
-  return '<div class="tl" id="tl"><div class="tl-in" style="--dw:'+DW+'px'+(tlLabW()?';--lab:'+tlLabW()+'px':'')+'">'+
+  var ttbar=tAny?'<div class="rtbar"><button type="button" class="btn sm" data-act="tlexpall">Expand all</button><button type="button" class="btn sm" data-act="tlcolall">Collapse all</button>'+(tHid?'<span class="note">'+tHid+' sub-tasks hidden</span>':'')+'</div>':'';
+  return ttbar+'<div class="tl" id="tl"><div class="tl-in" style="--dw:'+DW+'px'+(tlLabW()?';--lab:'+tlLabW()+'px':'')+'">'+
     '<div class="tl-head"><div class="tl-lab">Task<i class="tl-rs" tabindex="0" role="separator" aria-orientation="vertical" aria-label="Resize the task column (drag, or use the left and right arrow keys; double-click to reset)" title="Drag to resize. Double-click to reset."></i></div><div style="width:'+W+'px"><div class="months">'+ms+'</div><div class="days">'+dh+'</div></div></div>'+
     rows+
     '<div class="today" style="left:calc(var(--lab) + '+tx+'px)"></div><div class="today-tag" style="left:calc(var(--lab) + '+tx+'px);top:0">Today</div>'+
@@ -1251,6 +1272,12 @@ document.addEventListener('click',function(e){
   if(a==='pgroup'){fwGroup=el.dataset.g;render();return}
   if(a==='radd'){openRec(el.dataset.m);return}
   if(a==='rtoggle'){var tm=el.dataset.m+'|'+el.dataset.p,tn=el.dataset.no,tl=fwCol[tm]||[],ti=tl.indexOf(tn);if(ti>-1)tl.splice(ti,1);else tl.push(tn);fwCol[tm]=tl;fwColSave();render();return}
+  if(a==='bdtoggle'){var bl=fwCol.bd||[],bi=bl.indexOf(el.dataset.id);if(bi>-1)bl.splice(bi,1);else bl.push(el.dataset.id);fwCol.bd=bl;fwColSave();render();return}
+  if(a==='bdexpall'){fwCol.bd=[];fwColSave();render();return}
+  if(a==='bdcolall'){fwCol.bd=S.tasks.filter(function(t){return S.tasks.some(function(x){return x.parent===t.id})}).map(function(t){return t.id});fwColSave();render();return}
+  if(a==='tltoggle'){var tl=fwCol.tl||[],tk2=el.dataset.key,ti2=tl.indexOf(tk2);if(ti2>-1)tl.splice(ti2,1);else tl.push(tk2);fwCol.tl=tl;fwColSave();render();return}
+  if(a==='tlexpall'){fwCol.tl=[];fwColSave();render();return}
+  if(a==='tlcolall'){var tl2=[],vs=visible().filter(function(t){return (t.start||t.due)&&t.no});vs.forEach(function(t){if(vs.some(function(o){return o.project===t.project&&o.no.indexOf(t.no+'.')===0}))tl2.push(t.project+'|'+t.no)});fwCol.tl=tl2;fwColSave();render();return}
   if(a==='rexpall'){fwCol[el.dataset.m+'|'+el.dataset.p]=[];fwColSave();render();return}
   if(a==='rcolall'){var cm=el.dataset.m,cp=el.dataset.p,cr=recsOf(cm,cp),cl=[];cr.forEach(function(r){var n=r.no||'';if(n&&cr.some(function(o){return (o.no||'').indexOf(n+'.')===0}))cl.push(n)});fwCol[cm+'|'+cp]=cl;fwColSave();render();return}
   if(a==='redit'){openRec(el.dataset.m,el.dataset.id);return}
