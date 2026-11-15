@@ -335,6 +335,29 @@ nav.tabs .short{display:none}
 .ucard .ut{flex:1;min-width:0;overflow-wrap:anywhere}.ubody{padding:4px 14px 14px;border-top:1px solid var(--line)}.ubody .two{margin:12px 0}
 .guide li{overflow-wrap:anywhere}
 .tag.t9{background:#e8eef6;color:#244a7a}
+.nt-modal{max-width:640px;padding:0 20px 16px;gap:14px}
+.nt-head{display:flex;align-items:center;justify-content:space-between;padding-top:18px}.nt-head h2{margin:0}
+.nt-strip{display:flex;gap:6px;overflow-x:auto;margin:0 -20px;padding:10px 20px;background:var(--surface2);border-block:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.nt-db{display:flex;align-items:center;gap:10px;flex:0 0 auto;border:1px solid transparent;background:transparent;border-radius:12px;padding:8px 12px;text-align:left}
+.nt-db[aria-selected=true]{background:var(--surface);border-color:var(--line)}
+.nt-ic{position:relative;flex:0 0 36px;width:36px;height:36px;border-radius:9px;background:#2b2b2b;color:#fff;font:700 15px/36px var(--f-body);text-align:center;display:inline-block}
+.nt-ic.big{flex-basis:56px;width:56px;height:56px;border-radius:14px;font-size:24px;line-height:56px}
+.nt-modal>*{flex:0 0 auto}
+.nt-ic .sc-ok{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--good);color:#fff;font:700 12px/20px var(--f-body);font-style:normal;border:2px solid var(--surface)}
+.nt-dt{display:flex;flex-direction:column;white-space:nowrap}
+.nt-hero{display:flex;align-items:center;justify-content:center;gap:16px;background:var(--accent-soft);border-radius:14px;padding:22px}
+.nt-hero img{border-radius:14px;background:#fff}
+.nt-dots{width:70px;border-top:4px dotted var(--muted);opacity:.6}
+.nt-tabs{flex-wrap:wrap}
+.nt-row{display:grid;grid-template-columns:minmax(0,1fr) 20px minmax(0,1.2fr);gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.nt-row select{width:100%;min-width:0}.nt-ar{color:var(--muted);text-align:center}
+.setcards{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:900px){.setcards{grid-template-columns:1fr 1fr}}
+.setcard{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.setcard .sc-ic{position:relative;flex:0 0 48px;width:48px;height:48px;border-radius:12px;color:#fff;font:700 20px/48px var(--f-body);text-align:center}
+.setcard .sc-ok{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--good);color:#fff;font:700 12px/20px var(--f-body);font-style:normal;border:2px solid var(--surface)}
+.setcard .sc-tx{flex:1;min-width:0}.setcard .sc-tx p{margin:3px 0 0}
+.setcard .btn{flex:0 0 auto}
 .subtabs{display:flex;gap:4px;overflow-x:auto;margin:0 0 16px;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch}
 .subtabs button{border:0;background:transparent;padding:10px 14px;color:var(--muted);font-weight:500;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
 .subtabs button[aria-selected=true]{color:var(--fg);border-bottom-color:var(--accent)}
@@ -533,7 +556,7 @@ header.top{background:rgba(255,255,255,.84);-webkit-backdrop-filter:blur(6px);ba
   <header class="top">
     <button class="menubtn" id="menubtn" type="button" data-act="dtoggle" aria-label="Menu" aria-expanded="false" aria-controls="drawer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <div class="brand"><img class="mark" alt="" width="36" height="36" src="data:image/png;base64,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">Altair Project Management <small id="today"></small></div>
-    <span class="appver" id="appver" title="Version 2026.11.15 · Revision 66">Rev 66 · v2026.11.15</span>
+    <span class="appver" id="appver" title="Version 2026.11.15 · Revision 68">Rev 68 · v2026.11.15</span>
     <nav class="tabs" role="tablist" id="tabs"></nav>
     <button class="btn primary" data-act="new">+ New task</button>
     <span class="save" id="save" aria-live="polite"></span>
@@ -1249,7 +1272,7 @@ document.addEventListener('click',function(e){
   if(a==='setme'){cfgSet('me',el.dataset.id);render();return}
   if(a.indexOf('adm')===0&&admAct(a,el))return;
   if(a==='tab'||a==='setsub')autoSet=false;
-  if(a==='tab'){view=el.dataset.v;drawerSet(false);render();window.scrollTo(0,0);return}
+  if(a==='tab'){view=el.dataset.v;if(view==='set')setSub='home';drawerSet(false);render();window.scrollTo(0,0);return}
   if(a==='dtoggle'){drawerSet(!drawerOpen);return}
   if(a==='dclose'){drawerSet(false);return}
   if(a.indexOf('area')===0&&a!=='areas'){areaDo(a,el);return}
@@ -4222,7 +4245,7 @@ async function tlSync(dir){
 /* ---------- Settings view ---------- */
 var DAYN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 function renderSettings(){
-  if(setSub!=='acct'&&setSub!=='work'&&setSub!=='cal'&&setSub!=='tl'&&setSub!=='proj'&&setSub!=='org'&&setSub!=='bak'&&setSub!=='intg'&&setSub!=='access')setSub='acct';
+  if(setSub!=='home'&&setSub!=='acct'&&setSub!=='work'&&setSub!=='cal'&&setSub!=='tl'&&setSub!=='proj'&&setSub!=='org'&&setSub!=='bak'&&setSub!=='intg'&&setSub!=='access')setSub='home';
   usData();usLoad();calRestore();var w=workCfg(),c=calCfg(),t=tlCfg(),cfg=sb.cfg||{},last=tl.user?store.get('altairordo-tl-last:'+tl.user.id):'';
   var wd='<div class="panel"><h2>Work day</h2><p class="gtip">'+esc(GUIDE['set.work'])+'</p><div class="two"><label class="fld">Start<input type="time" data-wk="start" value="'+w.start+'"></label><label class="fld">End<input type="time" data-wk="end" value="'+w.end+'"></label></div><div class="two"><label class="fld">Lunch starts<input type="time" data-wk="lunchStart" value="'+w.lunchStart+'"></label><label class="fld">Lunch ends<input type="time" data-wk="lunchEnd" value="'+w.lunchEnd+'"></label></div>'+
    '<div class="dayrow" role="group" aria-label="Working days">'+[1,2,3,4,5,6,0].map(function(d){return '<label class="chk"><input type="checkbox" data-wd="'+d+'"'+(w.days.indexOf(d)>-1?' checked':'')+'> '+DAYN[d]+'</label>'}).join('')+'</div><p class="note">'+Math.round(workMinutes()/60*10)/10+' working hours per day.</p></div>';
@@ -4240,11 +4263,27 @@ function renderSettings(){
    :'<form class="inline-form" id="ftl"><input type="email" id="tl-email" placeholder="Polaris One e-mail" required autocomplete="username" aria-label="Polaris One e-mail"><input type="password" id="tl-pass" placeholder="Polaris One password" required autocomplete="current-password" aria-label="Polaris One password"><button class="btn primary"'+(tl.busy?' disabled':'')+'>'+(tl.busy?'Signing in...':'Sign in to Polaris One')+'</button></form><p class="note">Use the same e-mail and password you use in Polaris One. They go only to the Polaris One database, never to Altair Project Management servers.</p>')+
    (tl.err?'<div class="banner" style="margin-top:10px">'+esc(tl.err)+'</div>':'')+(tl.msg?'<p class="note" style="margin-top:8px"><b>'+esc(tl.msg)+'</b></p>':'')+(tl.log.length?'<ul class="how">'+tl.log.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>':'')+
    '<p class="note" style="margin-top:8px">Polaris One also reads this database by itself (Integrations, Groundwork). The table and column names are unchanged, so that older link keeps working.</p></div>';
-  var SUBS=[['acct','Account & database'],['work','Work day'],['cal','Outlook calendar'],['tl','Polaris One sync'],['intg','Integration status'],['proj','Domains & members'],['org','Functions & categories'],['bak','Backup & restore']];if(sb.on&&!sb.legacy&&isAdmin())SUBS.push(['access','Access']);
+  var SUBS=[['home','All settings'],['acct','Account & database'],['work','Work day'],['cal','Outlook calendar'],['tl','Polaris One sync'],['intg','Integration status'],['proj','Domains & members'],['org','Functions & categories'],['bak','Backup & restore']];if(sb.on&&!sb.legacy&&isAdmin())SUBS.push(['access','Access']);
   var nav='<div class="subtabs" role="tablist" aria-label="Settings sections">'+SUBS.map(function(x){return '<button role="tab" type="button" data-act="setsub" data-s="'+x[0]+'" aria-selected="'+(setSub===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>';
-  var body=setSub==='work'?wd:setSub==='cal'?ol:setSub==='tl'?(function(){if(!ss.loaded&&ssOn())setTimeout(ssLoad,0);return ssHtml()})()+tu+(tl.user?mtSyncHtml():''):setSub==='proj'?renderTeam()+evOrphanHtml():setSub==='org'?renderSetup():setSub==='bak'?bkHtml():setSub==='intg'?intgHtml():setSub==='access'?renderAccess():'<p class="gtip" style="margin-bottom:12px">'+esc(GUIDE['set.db'])+'</p><div id="board" class="sbboard"></div>';
+  /* Rev 67: Settings opens on a list of cards, one per section (icon, what it is for, state, one button). */
+  var polOn=!!(ss.ov&&ss.ov.linked),polAct=polOn&&ss.ov.status==='active';
+  if(setSub==='home'&&!ss.loaded&&ssOn())setTimeout(ssLoad,0);
+  var CARD={
+   acct:['D','#0e6b5c','Sign in, and the database this app keeps its data in.',!!(sb.on&&sb.user),(sb.on&&sb.user)?'Manage':'Connect',(sb.on&&sb.user)?'Signed in':''],
+   work:['W','#2a6fb0','Working hours, lunch break and working days. Used by Today and the free-time figures.',false,'Manage',''],
+   cal:['O','#1565c0','Your Outlook calendar on Today, through its ICS link or the Outlook connected in Polaris One.',calConfigured(),calConfigured()?'Manage':'Connect',calConfigured()?'Connected':''],
+   tl:['P','#0e6b5c','Projects are created here; Polaris One owns Activities and Actions. Link, sync and failed events.',polAct,polOn?'Manage':'Connect',polOn?(polAct?'Active':'Paused'):''],
+   intg:['I','#6b4fb0','What is connected, what is waiting to be sent, and why.',false,'Open',''],
+   proj:['M','#9a6a12','Life Area domains, projects and the members of your team.',false,'Manage',''],
+   org:['F','#5c6b66','Functions and categories used to group projects.',false,'Manage',''],
+   bak:['B','#1f7a45','Save the whole application state to a file, or restore it.',false,'Open',''],
+   access:['A','#b3341f','Who may read, enter or edit each project.',false,'Manage','']};
+  var home='<div class="setcards">'+SUBS.filter(function(x){return x[0]!=='home'}).map(function(x){var c=CARD[x[0]];
+    return '<div class="setcard" data-card="'+x[0]+'"><span class="sc-ic" style="background:'+c[1]+'" aria-hidden="true">'+c[0]+(c[3]?'<i class="sc-ok">✓</i>':'')+'</span><div class="sc-tx"><b>'+esc(x[1])+'</b>'+(c[5]?' <span class="chip">'+esc(c[5])+'</span>':'')+'<p class="note">'+esc(c[2])+'</p></div><button class="btn" type="button" data-act="setsub" data-s="'+x[0]+'" aria-label="'+esc(c[4]+' '+x[1])+'">'+c[4]+'</button></div>'}).join('')+
+    (function(){var nc=ntCfg(),nn=Object.keys(nc.dbs).filter(function(k){return nc.dbs[k].ok}).length;return '<div class="setcard" data-card="notion"><span class="sc-ic" style="background:#2b2b2b" aria-hidden="true">N'+(nn?'<i class="sc-ok">✓</i>':'')+'</span><div class="sc-tx"><b>Notion</b>'+(nn?' <span class="chip">'+nn+' connected</span>':'')+'<p class="note">Send projects and the Playbook, Supply chain, Finance and ISO registers to your Notion databases. Activities and Actions stay with Polaris One.</p></div><button class="btn" type="button" data-act="ntopen" aria-label="'+(nn?'Manage':'Connect')+' Notion">'+(nn?'Manage':'Connect')+'</button></div>'})()+'</div>';
+  var body=setSub==='home'?home:setSub==='work'?wd:setSub==='cal'?ol:setSub==='tl'?(function(){if(!ss.loaded&&ssOn())setTimeout(ssLoad,0);return ssHtml()})()+tu+(tl.user?mtSyncHtml():''):setSub==='proj'?renderTeam()+evOrphanHtml():setSub==='org'?renderSetup():setSub==='bak'?bkHtml():setSub==='intg'?intgHtml():setSub==='access'?renderAccess():'<p class="gtip" style="margin-bottom:12px">'+esc(GUIDE['set.db'])+'</p><div id="board" class="sbboard"></div>';
   return '<div class="setwrap"><h2 class="sethead">Settings</h2>'+nav+'<div class="setg'+(setSub==='work'||setSub==='cal'||setSub==='tl'?' narrow':'')+'">'+body+'</div></div>'}
-var setSub='acct';
+var setSub='home';
 /* ---------- Today view ---------- */
 var td0={member:'',top:null};
 function top3Get(){var d=cfgGet('top3')||{};return d.date===todayYmd()?d.ids:[]}
@@ -5099,6 +5138,161 @@ function dsHtml(){
   h+=(dsf.hist&&dsf.hist.length?'<ul class="how">'+dsf.hist.map(function(x){var ch=x.op==='update'?Object.keys(x.new_row||{}).join(', '):'';return '<li>'+esc(new Date(x.at).toLocaleString())+' · '+esc(x.actor_email||'system')+' · '+esc(x.op)+' '+esc(x.table_name)+' '+esc(x.label||'')+(ch?' ('+esc(ch)+')':'')+'</li>'}).join('')+'</ul>':'<p class="note">'+(dsf.busy?'Loading…':'No changes recorded yet.')+'</p>');
   return h+'</div>'}
 
+/* ---------- Rev 68: Notion. One way only: Altair PM is the source, Notion receives a copy. Activities and Actions are NOT sent (Polaris One owns them). ---------- */
+/* The Notion token is never in this page: it is a secret of the Edge Function `notion-proxy`, which only accepts read database, query, create page, update page. */
+var nt={open:false,db:'projects',tab:'conn',busy:false,msg:'',err:'',cols:{},plan:null,fn:null,timer:null,prog:''};
+var NT_FORMS={charter:1,tailor:1};
+function ntCfg(){var c=cfgGet('notion')||{};c.dbs=c.dbs||{};c.mode=c.mode==='auto'?'auto':'manual';c.every=[5,15,30,60].indexOf(+c.every)>-1?+c.every:15;return c}
+function ntSave(c){cfgSet('notion',c);ntAuto()}
+function ntDbs(){
+  var L=[{k:'projects',t:'Projects',ic:'P',title:'name',fields:[{k:'name',l:'Name',t:'text'},{k:'desc',l:'Description',t:'area'},{k:'life',l:'Life Area',t:'sel'},{k:'ptype',l:'Project type',t:'sel'},{k:'parentNo',l:'Parent project',t:'text'}]},
+         {k:'members',t:'Members',ic:'M',title:'name',fields:[{k:'name',l:'Name',t:'text'}]}];
+  MODS.forEach(function(m){
+    if(!m.fields||!m.fields.length)return;
+    var fs=m.fields.filter(function(f){return f.t!=='calc'}).map(function(f){return {k:f.k,l:f.l.replace(/ \(.*\)/,''),t:f.t,r:f.r}});
+    if(NT_FORMS[m.k])L.push({k:m.k,t:m.t,ic:m.t.charAt(0).toUpperCase(),form:1,title:'__project',fields:fs});
+    else{var tf=fs.filter(function(f){return f.k==='title'})[0]||fs.filter(function(f){return f.t==='text'})[0]||fs[0];L.push({k:m.k,t:m.t,ic:m.t.charAt(0).toUpperCase(),title:tf.k,fields:fs})}
+  });
+  return L}
+function ntDb(k){return ntDbs().filter(function(d){return d.k===k})[0]}
+function ntRows(d){
+  var pn=function(pid){var p=project(pid);return p?((p.no||'')+' '+p.name).trim():''};
+  if(d.k==='projects')return S.projects.filter(function(p){return plevel(p.id)>=1}).map(function(p){var pp=p.parent&&project(p.parent);return {id:p.id,no:p.no||'',proj:'',v:{name:p.name,desc:p.desc||'',life:p.life||'',ptype:p.ptype||'',parentNo:pp?pp.no||'':''}}});
+  if(d.k==='members')return S.members.map(function(m){return {id:m.id,no:m.no||'',proj:'',v:{name:m.name}}});
+  if(d.form)return S.projects.filter(function(p){return plevel(p.id)>=1&&S.fw[p.id]&&S.fw[p.id][d.k]&&Object.keys(S.fw[p.id][d.k]).length}).map(function(p){var o=S.fw[p.id][d.k],v={__project:pn(p.id)};d.fields.forEach(function(f){v[f.k]=o[f.k]});return {id:p.id+':'+d.k,no:p.no||'',proj:pn(p.id),v:v}});
+  return ((S.rec||{})[d.k]||[]).filter(function(r){return plevel(r.project)>=1}).map(function(r){var v={};d.fields.forEach(function(f){v[f.k]=f.t==='ref'?refLabel(f.r,r[f.k]):r[f.k]});return {id:r.id,no:r.no||'',proj:pn(r.project),v:v}})}
+/* fixed columns every Notion database needs, besides one title column */
+var NT_FIX=[['APM ID','rich_text'],['APM No','rich_text'],['Project','rich_text']];
+function ntWant(f){return f.t==='num'?'number':f.t==='date'?'date':f.t==='sel'?'select':'rich_text'}
+function ntOk(colType,f){var w=ntWant(f);return colType===w||colType==='rich_text'||(w==='select'&&colType==='status')||(w==='rich_text'&&colType==='url')}
+function ntTitleCol(cols){return Object.keys(cols||{}).filter(function(n){return cols[n]==='title'})[0]||''}
+function ntProp(d,f,cols,map){
+  if(f.k===d.title)return ntTitleCol(cols);
+  var m=(map||{})[f.k];if(m==='-')return '';
+  if(m&&cols[m]&&ntOk(cols[m],f))return m;
+  var hit=Object.keys(cols||{}).filter(function(n){return n.toLowerCase()===f.l.toLowerCase()&&ntOk(cols[n],f)})[0];return hit||''}
+function ntTxt(s){return String(s==null?'':s).slice(0,1900)}
+function ntVal(type,v){
+  var s=ntTxt(v);
+  if(type==='title')return {title:s?[{text:{content:s}}]:[]};
+  if(type==='rich_text')return {rich_text:s?[{text:{content:s}}]:[]};
+  if(type==='number'){var n=parseFloat(String(v).replace(/,/g,''));return {number:isNaN(n)?null:n}}
+  if(type==='select')return {select:s?{name:s.replace(/,/g,' ').slice(0,100)}:null};
+  if(type==='status')return s?{status:{name:s.replace(/,/g,' ').slice(0,100)}}:null;
+  if(type==='date')return {date:/^\d{4}-\d{2}-\d{2}/.test(s)?{start:s.slice(0,10)}:null};
+  if(type==='url')return {url:s||null};
+  return null}
+function ntPlain(p){
+  if(!p)return '';var t=p.type;
+  if(t==='title'||t==='rich_text')return (p[t]||[]).map(function(x){return x.plain_text!=null?x.plain_text:(x.text&&x.text.content)||''}).join('');
+  if(t==='number')return p.number==null?'':String(p.number);
+  if(t==='select'||t==='status')return p[t]?p[t].name:'';
+  if(t==='date')return p.date?String(p.date.start).slice(0,10):'';
+  if(t==='url')return p.url||'';
+  return ''}
+function ntWantPlain(type,v){var o=ntVal(type,v);if(!o)return '';return ntPlain(Object.assign({type:type},o))}
+async function ntCall(op,args){
+  if(nt.fn)return nt.fn(op,args||{});
+  if(!sb.on||!sb.cfg)throw new Error('Sign in to your database first (Settings, Account & database).');
+  var c=sbClient(),ses=await c.auth.getSession(),tok=ses&&ses.data&&ses.data.session&&ses.data.session.access_token;
+  if(!tok)throw new Error('Sign in to the database again.');
+  var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},30000),r;
+  try{r=await fetch(sb.cfg.url.replace(/\/+$/,'')+'/functions/v1/notion-proxy',{method:'POST',signal:ctl.signal,headers:{'Content-Type':'application/json',Authorization:'Bearer '+tok,apikey:sb.cfg.key},body:JSON.stringify(Object.assign({op:op},args||{}))})}
+  catch(e){throw new Error('The function notion-proxy could not be reached. Deploy it in this Supabase project and set its secret NOTION_TOKEN.')}
+  finally{clearTimeout(tm)}
+  var j=null;try{j=await r.json()}catch(e){}
+  if(r.status===404&&!(j&&j.error))throw new Error('The function notion-proxy is not deployed in this Supabase project.');
+  if(!r.ok)throw new Error((j&&(j.error||j.message))||('Notion answered '+r.status));
+  return j}
+function ntId(s){var m=String(s||'').replace(/-/g,'').match(/[0-9a-f]{32}/i);return m?m[0].toLowerCase():''}
+async function ntCheck(k){
+  var c=ntCfg(),e=c.dbs[k]||{},id=ntId(e.id);if(!id)throw new Error('Paste the Notion database link or ID first.');
+  var j=await ntCall('db',{database_id:id}),cols={};Object.keys(j.properties||{}).forEach(function(n){cols[n]=j.properties[n].type});
+  nt.cols[k]=cols;var d=ntDb(k),miss=[];
+  if(!ntTitleCol(cols))miss.push('a title column');
+  NT_FIX.forEach(function(x){if(x[0]==='Project'&&(k==='projects'||k==='members'))return;if(cols[x[0]]!=='rich_text')miss.push('"'+x[0]+'" (Text)')});
+  e.ok=!miss.length;e.name=(j.title||[]).map(function(x){return x.plain_text||''}).join('')||'';e.miss=miss;e.at=new Date().toISOString();c.dbs[k]=e;ntSave(c);
+  return e}
+async function ntPlan(k){
+  var c=ntCfg(),e=c.dbs[k]||{},id=ntId(e.id),d=ntDb(k);if(!id)throw new Error('Connect this database first.');
+  if(!nt.cols[k])await ntCheck(k);var cols=nt.cols[k];e=ntCfg().dbs[k];
+  if(!e.ok)throw new Error('Notion database is missing: '+(e.miss||[]).join(', ')+'.');
+  var pages={},cur=null,n=0;
+  do{var q=await ntCall('query',{database_id:id,start_cursor:cur});(q.results||[]).forEach(function(p){var key=ntPlain(p.properties&&p.properties['APM ID']);if(key)pages[key]=p});cur=q.has_more?q.next_cursor:null;n++}while(cur&&n<60);
+  var rows=ntRows(d),plan={k:k,id:id,create:[],update:[],same:0,only:0,skipped:[]},seen={},tcol=ntTitleCol(cols);
+  d.fields.forEach(function(f){if(f.k!==d.title&&!ntProp(d,f,cols,e.map))plan.skipped.push(f.l)});
+  rows.forEach(function(r){
+    var props={};props[tcol]=ntVal('title',r.v[d.title]||r.no||'(untitled)');props['APM ID']=ntVal('rich_text',r.id);props['APM No']=ntVal('rich_text',r.no);
+    if(cols.Project==='rich_text'&&k!=='projects'&&k!=='members')props.Project=ntVal('rich_text',r.proj);
+    d.fields.forEach(function(f){if(f.k===d.title)return;var pn=ntProp(d,f,cols,e.map);if(!pn)return;var val=ntVal(cols[pn],r.v[f.k]);if(val)props[pn]=val});
+    seen[r.id]=1;var pg=pages[r.id],ttl=ntTxt(r.v[d.title]||r.no);
+    if(!pg){plan.create.push({t:ttl,props:props});return}
+    var diff=Object.keys(props).some(function(pn){return ntPlain(pg.properties[pn])!==ntPlain(Object.assign({type:cols[pn]},props[pn]))});
+    if(diff)plan.update.push({t:ttl,page:pg.id,props:props});else plan.same++});
+  Object.keys(pages).forEach(function(key){if(!seen[key])plan.only++});
+  return plan}
+async function ntRun(k,quiet){
+  var plan=await ntPlan(k),done=0,bad=0,first='',all=plan.create.length+plan.update.length;
+  var step=async function(fn){try{await fn();done++}catch(x){bad++;first=first||String(x.message||x)}nt.prog=(done+bad)+' of '+all;if(!quiet&&nt.open)ntDraw();await new Promise(function(r){setTimeout(r,nt.fn?0:350)})};
+  for(var i=0;i<plan.create.length&&bad<5;i++){var a=plan.create[i];await step(function(){return ntCall('create',{database_id:plan.id,properties:a.props})})}
+  for(var j=0;j<plan.update.length&&bad<5;j++){var u=plan.update[j];await step(function(){return ntCall('update',{page_id:u.page,properties:u.props})})}
+  var c=ntCfg(),e=c.dbs[k]||{};e.last={at:new Date().toISOString(),created:Math.min(done,plan.create.length),updated:Math.max(0,done-plan.create.length),failed:bad,same:plan.same,error:first};c.dbs[k]=e;cfgSet('notion',c);nt.prog='';
+  return e.last}
+function ntAuto(){
+  clearInterval(nt.timer);nt.timer=null;var c=ntCfg();if(c.mode!=='auto')return;
+  nt.timer=setInterval(async function(){if(nt.busy||!sb.on)return;nt.busy=true;try{var cc=ntCfg(),ks=Object.keys(cc.dbs).filter(function(k){return cc.dbs[k].ok&&ntId(cc.dbs[k].id)});for(var i=0;i<ks.length;i++){try{await ntRun(ks[i],true)}catch(e){}}}finally{nt.busy=false;if(nt.open)ntDraw()}},c.every*60000)}
+function ntDo(label,fn){nt.busy=true;nt.err='';nt.msg=label+'...';ntDraw();Promise.resolve().then(fn).then(function(m){nt.msg=m||'';}).catch(function(x){nt.err=String(x.message||x);nt.msg=''}).then(function(){nt.busy=false;ntDraw()})}
+function ntDraw(){
+  var h=document.getElementById('ntp');if(!nt.open){if(h)h.remove();return}
+  if(!h){h=document.createElement('div');h.id='ntp';document.body.appendChild(h)}
+  var c=ntCfg(),dbs=ntDbs(),d=ntDb(nt.db)||dbs[0],e=c.dbs[d.k]||{},cols=nt.cols[d.k],mk=document.querySelector('.brand .mark'),dis=nt.busy?' disabled':'';
+  var strip='<div class="nt-strip" role="tablist" aria-label="Notion databases">'+dbs.map(function(x){var ok=(c.dbs[x.k]||{}).ok;return '<button type="button" role="tab" class="nt-db" data-act="ntdb" data-k="'+x.k+'" aria-selected="'+(x.k===d.k)+'"><span class="nt-ic">'+esc(x.ic)+(ok?'<i class="sc-ok">✓</i>':'')+'</span><span class="nt-dt"><b>'+esc(x.t)+'</b><span class="note">'+(ok?'Connected':'Connect, mapping, sync')+'</span></span></button>'}).join('')+'</div>';
+  var hero='<div class="nt-hero"><span class="nt-ic big">N'+(e.ok?'<i class="sc-ok">✓</i>':'')+'</span><span class="nt-dots" aria-hidden="true"></span>'+(mk?'<img alt="Altair Project Management" width="56" height="56" src="'+esc(mk.getAttribute('src')||'')+'">':'<span class="nt-ic big" style="background:var(--accent)">A</span>')+'</div>';
+  var tabs='<div class="acts nt-tabs">'+[['conn','Connect & check'],['map','Mapping'],['sync','Preview & sync']].map(function(x){return '<button type="button" class="btn'+(nt.tab===x[0]?' primary':'')+'" data-act="nttab" data-t="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div>';
+  var body='';
+  if(nt.tab==='conn'){
+    body='<div class="panel"><h3>Connect &amp; check</h3><ol class="how"><li>In Notion, create the database "'+esc('APM '+d.t)+'" with the columns in the structure sheet.</li><li>Open the database menu, Connections, and add your integration.</li><li>Copy the database link and paste it here.</li></ol>'+
+      '<label class="fld">Notion database link or ID<input id="nt-id" value="'+esc(e.id||'')+'" placeholder="https://www.notion.so/... or 32 characters" autocomplete="off" spellcheck="false"></label>'+
+      '<div class="acts"><button type="button" class="btn primary" data-act="ntcheck"'+dis+'>Save and check</button>'+(e.id?'<button type="button" class="btn danger" data-act="ntforget"'+dis+'>Disconnect</button>':'')+'</div>'+
+      (e.at?'<p class="note" style="margin-top:8px">'+(e.ok?'Connected to "'+esc(e.name||'')+'". ':'Not ready: missing '+esc((e.miss||[]).join(', '))+'. ')+'Checked '+esc(new Date(e.at).toLocaleString())+'.</p>':'')+
+      '<p class="note">The Notion token is not typed here. It is the secret NOTION_TOKEN of the Edge Function notion-proxy.</p></div>';
+  }else if(nt.tab==='map'){
+    body='<div class="panel"><h3>Mapping</h3><p class="note">Matched by name. Change a row to pick another Notion column, or "Do not sync". Altair PM is the source: Notion receives a copy.</p>'+
+      (!cols?'<p class="note">Open "Connect &amp; check" and press Save and check first, so the Notion columns are known.</p>':
+       '<div class="nt-map">'+d.fields.map(function(f){
+         if(f.k===d.title)return '<div class="nt-row"><span>'+esc(f.l)+'</span><span class="nt-ar" aria-hidden="true">→</span><span class="note">Title column: '+esc(ntTitleCol(cols)||'none')+'</span></div>';
+         var auto=Object.keys(cols).filter(function(n){return n.toLowerCase()===f.l.toLowerCase()&&ntOk(cols[n],f)})[0],cur=(e.map||{})[f.k]||'';
+         return '<div class="nt-row"><span>'+esc(f.l)+'</span><span class="nt-ar" aria-hidden="true">→</span><select data-ntmap="'+esc(f.k)+'" aria-label="Notion column for '+esc(f.l)+'"><option value="">Automatic: '+esc(auto||'no match')+'</option>'+Object.keys(cols).filter(function(n){return ntOk(cols[n],f)&&cols[n]!=='title'&&n!=='APM ID'&&n!=='APM No'&&n!=='Project'}).sort().map(function(n){return '<option value="'+esc(n)+'"'+(cur===n?' selected':'')+'>'+esc(n)+'</option>'}).join('')+'<option value="-"'+(cur==='-'?' selected':'')+'>Do not sync</option></select></div>'}).join('')+'</div>')+'</div>';
+  }else{
+    var p=nt.plan&&nt.plan.k===d.k?nt.plan:null,l=e.last;
+    body='<div class="panel"><h3>Preview &amp; sync</h3><p class="note">Nothing is deleted in Notion. Rows that exist only in Notion are left as they are.</p>'+
+      '<div class="acts"><button type="button" class="btn" data-act="ntprev"'+dis+'>Preview</button><button type="button" class="btn primary" data-act="ntsync"'+dis+'>Sync now</button></div>'+
+      (p?'<dl class="kv" style="margin-top:10px"><dt>To create</dt><dd>'+p.create.length+'</dd><dt>To update</dt><dd>'+p.update.length+'</dd><dt>Already the same</dt><dd>'+p.same+'</dd><dt>Only in Notion</dt><dd>'+p.only+'</dd></dl>'+(p.skipped.length?'<p class="note">Not sent (no Notion column): '+esc(p.skipped.join(', '))+'.</p>':'')+(p.create.length?'<p class="note">New: '+esc(p.create.slice(0,5).map(function(x){return x.t}).join('; '))+(p.create.length>5?' ...':'')+'</p>':''):'')+
+      (l?'<p class="note" style="margin-top:8px">Last sync '+esc(new Date(l.at).toLocaleString())+': '+l.created+' created, '+l.updated+' updated, '+l.same+' unchanged'+(l.failed?', <b>'+l.failed+' failed</b> ('+esc(trunc(l.error||'',120))+')':'')+'.</p>':'')+'</div>'+
+      '<div class="panel"><h3>How it syncs</h3><label class="fld">Mode<select data-ntc="mode"><option value="manual"'+(c.mode==='manual'?' selected':'')+'>Manual only</option><option value="auto"'+(c.mode==='auto'?' selected':'')+'>Manual and automatic</option></select></label>'+
+      '<label class="fld">Every<select data-ntc="every"'+(c.mode==='auto'?'':' disabled')+'>'+[5,15,30,60].map(function(n){return '<option value="'+n+'"'+(c.every===n?' selected':'')+'>'+n+' minutes</option>'}).join('')+'</select></label><p class="note">The mode applies to all databases. Automatic runs only while this app is open.</p></div>';
+  }
+  h.innerHTML='<div class="scrim" data-act="ntscrim"><div class="modal nt-modal" role="dialog" aria-modal="true" aria-label="Notion"><div class="nt-head"><h2>Notion</h2><button type="button" class="btn" data-act="ntclose" aria-label="Close">✕</button></div>'+strip+hero+
+    '<div><h3 style="margin:0 0 4px">'+esc(d.t)+': own database, own mapping</h3><p class="note" style="margin:0">One Notion database for '+esc(d.t)+'. Mapped by name; you can change any row. Activities and Actions are not sent: Polaris One owns them.</p></div>'+tabs+
+    (nt.err?'<div class="banner" role="alert">'+esc(nt.err)+'</div>':'')+(nt.msg||nt.prog?'<p class="note" aria-live="polite"><b>'+esc(nt.msg)+(nt.prog?' '+esc(nt.prog):'')+'</b></p>':'')+body+
+    '<div class="acts" style="justify-content:flex-end"><button type="button" class="btn" data-act="ntclose">Close</button></div></div></div>';
+  var sel=h.querySelector('.nt-db[aria-selected=true]');if(sel&&sel.scrollIntoView&&nt.scroll){nt.scroll=false;sel.scrollIntoView({block:'nearest',inline:'center'})}}
+document.addEventListener('click',function(e){
+  var el=e.target.closest&&e.target.closest('[data-act]');if(!el)return;var a=el.dataset.act;
+  if(a==='ntopen'){nt.open=true;nt.err='';nt.msg='';nt.scroll=true;ntDraw();return}
+  if(a==='ntclose'||(a==='ntscrim'&&e.target===el)){nt.open=false;ntDraw();if(view==='set')render();return}
+  if(a==='ntdb'){nt.db=el.dataset.k;nt.tab='conn';nt.err='';nt.msg='';nt.plan=null;ntDraw();return}
+  if(a==='nttab'){nt.tab=el.dataset.t;nt.err='';nt.msg='';ntDraw();return}
+  if(a==='ntcheck'){var v=(document.getElementById('nt-id')||{}).value||'',c=ntCfg(),k=nt.db;c.dbs[k]=c.dbs[k]||{};c.dbs[k].id=v.trim();c.dbs[k].ok=false;ntSave(c);ntDo('Checking',function(){return ntCheck(k).then(function(x){return x.ok?'Connected. The columns are ready.':'Connected, but columns are missing: '+x.miss.join(', ')+'.'})});return}
+  if(a==='ntforget'){var c2=ntCfg();delete c2.dbs[nt.db];delete nt.cols[nt.db];nt.plan=null;ntSave(c2);nt.msg='Disconnected here. Nothing was changed in Notion.';ntDraw();return}
+  if(a==='ntprev'){var k2=nt.db;ntDo('Reading Notion',function(){return ntPlan(k2).then(function(p){nt.plan=p;return 'Preview ready.'})});return}
+  if(a==='ntsync'){var k3=nt.db;ntDo('Syncing',function(){return ntRun(k3).then(function(l){nt.plan=null;return 'Done: '+l.created+' created, '+l.updated+' updated'+(l.failed?', '+l.failed+' failed':'')+'.'})});return}
+});
+document.addEventListener('change',function(e){var t=e.target;if(!t||!t.dataset)return;
+  if(t.dataset.ntmap){var c=ntCfg(),k=nt.db;c.dbs[k]=c.dbs[k]||{};c.dbs[k].map=c.dbs[k].map||{};if(t.value)c.dbs[k].map[t.dataset.ntmap]=t.value;else delete c.dbs[k].map[t.dataset.ntmap];nt.plan=null;ntSave(c);return}
+  if(t.dataset.ntc){var c2=ntCfg();c2[t.dataset.ntc]=t.dataset.ntc==='every'?+t.value:t.value;ntSave(c2);ntDraw()}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nt.open){nt.open=false;ntDraw()}});
+setTimeout(function(){try{ntAuto()}catch(e){}},5000);
 /* ---------- boot ---------- */
 function setState(s){S=s;render()}
 function emptyState(){return {v:1,sample:false,projects:[],members:[{id:uid(),name:'Me',no:'MBR-0001'}],tasks:[],fw:{},rec:{},comp:[],fn:[],cat:[],gov:[],pgov:{},seq:{MBR:1}}}
